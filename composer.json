@@ -1,0 +1,23 @@
+{
+  "name": "vendor_name/dcw",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "mmisl",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    
+  },
+  "require-dev": {
+
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "App"
+    }
+  }
+}

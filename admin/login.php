@@ -19,7 +19,7 @@
     <div class="container">
 
         <!--       admin login form -->
-        <div class="row justify-content-center min-vh-100" id="login-form-box">
+        <div class="row justify-content-center min-vh-100" id="login-form-box" style="display: none">
             <div class="col-lg-10 my-auto">
                 <div class="card-group ">
                     <div class="card p-4">
@@ -76,7 +76,7 @@
         </div >
 
         <!--       admin register form -->
-        <div class="row justify-content-center min-vh-100" id="register-form-box" style="display: none">
+        <div class="row justify-content-center min-vh-100" id="register-form-box">
             <div class="col-lg-10 my-auto">
                 <div class="card-group ">
                     <div class="card p-4">
@@ -91,31 +91,39 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-user"></i></div>
                                     </div>
-                                    <input type="text" class="form-control" id="" placeholder="Name">
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Name" required minlength="4">
+                                    <div class="invalid-feedback">Name is required!</div>
                                 </div>
 
                                 <div class="input-group my-4">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-envelope"></i></div>
                                     </div>
-                                    <input type="email" class="form-control" id="" placeholder="Email">
+                                    <input type="email" class="form-control" name="email" id="r_email" placeholder="Email" required minlength="8">
+                                    <div class="invalid-feedback">Email is required!</div>
                                 </div>
 
                                 <div class="input-group my-4">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-key"></i></div>
                                     </div>
-                                    <input type="password" class="form-control" id="" placeholder="password">
+                                    <input type="password" class="form-control" name="r_password" id="r_password" placeholder="password" required minlength="6" maxlength="32">
+                                    <div class="invalid-feedback">Password is required!</div>
                                 </div>
 
-                                <div class="input-group my-4">
+                                <div class="input-group mt-4 mb-0">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-key"></i></div>
                                     </div>
-                                    <input type="password" class="form-control" id="" placeholder="Confirm password">
+                                    <input type="password" class="form-control" id="c_password" name="c_password" placeholder="Confirm password" required minlength="6" maxlength="32">
+                                    <div class="invalid-feedback">Confirm your password</div>
+
                                 </div>
 
-                                <button type="submit" class="btn btn-block btn-primary ">Register</button>
+                                <div class="text-danger  d-none mt-1" id="confirm_invalid">Password does not match!</div>
+
+
+                                <button type="submit" class="btn btn-block btn-primary mt-4" id="registerUser" >Register</button>
 
                             </form>
                         </div>
