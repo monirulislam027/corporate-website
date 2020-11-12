@@ -84,7 +84,9 @@
                         <h2 class="text-primary text-center">Register a new account</h2>
                         <hr  class="my-2">
 
+
                         <div class="login-form-box px-3">
+                            <div id="register-response-message"></div>
                             <form action="#" method="post" id="register-form">
 
                                 <div class="input-group my-4">

@@ -15,4 +15,15 @@ class Config
             die($this->conn->connect_error);
         }
     }
+
+    public function showMessage($type , $message){
+        $output = '';
+        $output.= '<div class="alert alert-'. $type .' alert-dismissible fade show m-0" role="alert">';
+        $output.= $message;
+        $output.= '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        $output.= '<span aria-hidden="true">&times;</span>';
+        $output.= '</button>';
+        $output.= '</div>';
+        return $output;
+    }
 }

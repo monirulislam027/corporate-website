@@ -71,15 +71,21 @@ $(document).ready(function () {
                         method:'post' ,
                         data: registerForm.serialize() + '&action=register',
                         success:function (response) {
-                            console.log(response)
+                            if (response=='ok'){
+                                window.location = 'index.php';
+                            }else{
+                                $('#registerUser').html("Register").attr('disabled' , false);
+                                $('#register-response-message').html(response);
+                            }
+
+                        } ,
+                        error: function (response) {
+                            console.log('Something went wrong!');
+
                         }
                     });
                 }
             }
-
-            setTimeout(function () {
-                $('#registerUser').html("Register").attr('disabled' , false);
-            } , 2000)
         }
 
     });
