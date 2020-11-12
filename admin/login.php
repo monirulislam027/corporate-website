@@ -1,3 +1,15 @@
+<?php
+require_once '../vendor/autoload.php';
+
+use App\Classes\Auth;
+
+$auth = new Auth();
+$auth->isLogedIn() ? header('location:index.php'):false;
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +31,7 @@
     <div class="container">
 
         <!--       admin login form -->
-        <div class="row justify-content-center min-vh-100" id="login-form-box" style="display: none">
+        <div class="row justify-content-center min-vh-100" id="login-form-box">
             <div class="col-lg-10 my-auto">
                 <div class="card-group ">
                     <div class="card p-4">
@@ -29,25 +41,27 @@
 
                         <div class="login-form-box px-3">
                             <form action="#" method="post" id="login-form">
-
+                                <div id="login-response-message"></div>
                                 <div class="input-group my-4">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-envelope"></i></div>
                                     </div>
-                                    <input type="email" class="form-control" id="" placeholder="Email">
+                                    <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Email" value="<?= isset($_COOKIE['user_email']) ? base64_decode($_COOKIE['user_email']) : '' ?>">
+                                    <div class="invalid-feedback">Email is required!</div>
                                 </div>
 
                                 <div class="input-group my-4">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-key"></i></div>
                                     </div>
-                                    <input type="password" class="form-control" id="" placeholder="password">
+                                    <input type="password" class="form-control"  id="loginPassword" name="password" placeholder="Password" value="<?= isset($_COOKIE['user_password']) ? base64_decode($_COOKIE['user_password']) : '' ?>">
+                                    <div class="invalid-feedback">Password is required!</div>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="float-left">
-                                        <input type="checkbox" name="remember_me" id="rememberMe" class="custom-checkbox">
-                                        <label for="rememberMe" >Remember Me</label>
+                                        <input type="checkbox" name="remember_me" id="rememberMe" class="custom-checkbox mr-1" <?= isset($_COOKIE['user_email']) ? 'checked': '' ?>
+                                        <label for="rememberMe" class="custom-control-label ml-2">Remember Me</label>
                                     </div>
                                     <div class="float-right">
                                         <a href="javascript:" id="showForgotForm" class="text-decoration-none"> Forgot Password ?</a>
@@ -55,7 +69,7 @@
                                     <div class="clearfix"></div>
                                 </div>
 
-                                <button type="submit" class="btn btn-block btn-primary ">Sign In</button>
+                                <button type="submit" id="signInBtn" class="btn btn-block btn-primary ">Sign In</button>
 
                             </form>
                         </div>
@@ -76,7 +90,7 @@
         </div >
 
         <!--       admin register form -->
-        <div class="row justify-content-center min-vh-100" id="register-form-box">
+        <div class="row justify-content-center min-vh-100" id="register-form-box" style="display: none">
             <div class="col-lg-10 my-auto">
                 <div class="card-group ">
                     <div class="card p-4">

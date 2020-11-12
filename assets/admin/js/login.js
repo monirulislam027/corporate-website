@@ -32,7 +32,6 @@ $(document).ready(function () {
 
         if (registerForm[0].checkValidity()){
             e.preventDefault();
-            $('#registerUser').html("loading.....").attr('disabled' , true);
 
             if ($('#name').val() == ''){
                 $('#name').addClass('is-invalid');
@@ -66,11 +65,13 @@ $(document).ready(function () {
 
             if ($('#r_password').val() === $('#c_password').val()){
                 if ($('#r_email').val() != '' && $('#name').val() != ''){
+                    $('#registerUser').html("loading.....").attr('disabled' , true);
                     $.ajax({
                         url:siteUrl+ 'admin/action.php',
                         method:'post' ,
                         data: registerForm.serialize() + '&action=register',
                         success:function (response) {
+
                             if (response=='ok'){
                                 window.location = 'index.php';
                             }else{
@@ -88,6 +89,53 @@ $(document).ready(function () {
             }
         }
 
+    });
+
+
+    $('#signInBtn').click(function (e) {
+        if (loginForm[0].checkValidity()) {
+            e.preventDefault();
+            $('#signInBtn').html("Processing.....").attr('disabled' , true);
+            if ($('#loginEmail').val() == ''){
+                $('#loginEmail').addClass('is-invalid');
+            }else{
+                $('#loginEmail').removeClass('is-invalid');
+            }
+
+            if ($('#loginPassword').val() == ''){
+                $('#loginPassword').addClass('is-invalid');
+            }else{
+                $('#loginPassword').removeClass('is-invalid');
+            }
+
+            if ($('#loginEmail').val() != '' && $('#loginPassword').val() != ''){
+
+                $.ajax({
+                    url:siteUrl+ 'admin/action.php',
+                    method:'post' ,
+                    data: loginForm.serialize() + '&action=login',
+                    success:function (response) {
+                        if (response=='ok'){
+                            window.location = 'index.php';
+                        }else{
+                            $('#signInBtn').html("Sign In").attr('disabled' , false);
+                            $('#login-response-message').html(response);
+                        }
+
+                    } ,
+                    error: function (response) {
+                        console.log('Something went wrong!');
+
+                    }
+                });
+            }
+
+
+
+
+
+
+        }
     });
 
     

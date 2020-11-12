@@ -26,4 +26,10 @@ class Config
         $output.= '</div>';
         return $output;
     }
+
+    public function isLogedIn(){
+        session_start();
+        return isset($_SESSION['user_email']);
+    }
+
 }

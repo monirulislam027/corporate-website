@@ -16,4 +16,10 @@ class Auth extends Config
         return $result->num_rows;
     }
 
+    public function login($email){
+
+        return $this->conn->query("Select * from `users` where `email` = '$email'");
+
+    }
+
 }
