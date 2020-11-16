@@ -1,10 +1,15 @@
 <?php
 session_start();
+
+
 require_once '../vendor/autoload.php';
 
 use App\Classes\Auth;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 $auth = new Auth();
+$mail = new PHPMailer(true);
 
 
 
@@ -19,7 +24,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'register'){
     }else{
         if ($auth->register($name ,$email , $password)){
             echo 'ok';
-            $_SESSION['email'] = $email;
+            $_SESSION['user_email'] = base64_encode($email);
         }else{
             echo $auth->showMessage('danger' , 'Something Went Wrong');
         }
@@ -57,4 +62,72 @@ if (isset($_POST['action']) && $_POST['action'] == 'login'){
     }else{
         echo $auth->showMessage('danger' , 'These credential are not match in our system!');
     }
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'reset-password'){
+
+    $email = $_POST['reset_email'];
+    $result = $auth->get_user($email);
+    if ($result->num_rows > 0){
+        $token = uniqid();
+        if ($auth->token_update($email , $token)){
+            try {
+                //Server settings
+                $mail->isSMTP();                                            // Send using SMTP
+                $mail->Host       = 'smtp.mailtrap.io';                    // Set the SMTP server to send through
+                $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+                $mail->Username   = '05dd8a15f515fa';                     // SMTP username
+                $mail->Password   = '8c3244248b843b';                               // SMTP password
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+                $mail->Port       = 2525;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+                //Recipients
+                $mail->setFrom('mdmonir027@gmail.com', 'Md Monir');
+                $mail->addAddress($email);
+
+                // Content
+                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->Subject = 'Reset Your Password';
+                $mail->Body    = '`<div style="margin: auto;width: 50%; text-align:center;">
+                                    <p>Reset your password</p>
+                                    <a href="http://dcw.test/admin/reset-password.php?email='. $email .'&token='. $token .'" style="background:#00c4cc;color: #fff; text-decoration:none;padding: 10px">Click Here</a>
+                                </div>`';
+
+                $mail->send();
+                echo $auth->showMessage('success' , "We have sent you a mail. Please check you mail inbox. By clicking that link, you can change you password! ");
+            } catch (Exception $e) {
+               echo $auth->showMessage('danger' , "Something went wrong! Try again!".$mail->ErrorInfo);
+           }
+        }else{
+            echo $auth->showMessage('danger' , "Something went wrong! Try again!");
+        }
+
+
+    }else{
+        echo $auth->showMessage('warning' , "This email doesn't exist in our system!");
+    }
+
+
+}
+
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'update-password'){
+    $email = $_POST['email'];
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    $hasPass = password_hash($new_password , PASSWORD_DEFAULT);
+
+    $update = $auth->password_update($email , $hasPass);
+
+    if ($update){
+        $auth->token_null($email);
+        $_SESSION['user_email'] = base64_encode($email);
+        echo 'ok';
+    }else{
+        echo $auth->showMessage('danger' , 'Something went wrong! Try again!');
+    }
+
 }

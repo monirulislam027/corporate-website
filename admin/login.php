@@ -170,15 +170,17 @@ $auth->isLogedIn() ? header('location:index.php'):false;
 
                         <div class="login-form-box px-3">
                             <form action="#" method="post" id="forgotten-password-form">
+                                <div id="resetPasswordResponse"></div>
 
                                 <div class="input-group my-4">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text"><i class="fa fa-envelope"></i></div>
                                     </div>
-                                    <input type="email" class="form-control" id="" placeholder="Email">
+                                    <input type="email" name="reset_email" class="form-control" id="resetEmail" placeholder="Email">
+                                    <div class="invalid-feedback">This email filed is required!</div>
                                 </div>
 
-                                <button type="submit" class="btn btn-block btn-primary ">Reset Password</button>
+                                <button type="submit" id="resetPasswordBtn" class="btn btn-block btn-primary ">Reset Password</button>
 
                             </form>
                         </div>

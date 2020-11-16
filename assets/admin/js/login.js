@@ -1,6 +1,7 @@
 $(document).ready(function () {
     
     const siteUrl = "http://dcw.test/";
+
     const loginFormBox = $('#login-form-box');
     const registerFormBox = $('#register-form-box');
     const forgetFormBox = $('#forgotten-password-form-box');
@@ -129,14 +130,96 @@ $(document).ready(function () {
                     }
                 });
             }
-
-
-
-
-
-
         }
     });
 
-    
+
+    $('#resetPasswordBtn').click(function (e) {
+       if ($('#forgotten-password-form')[0].checkValidity()){
+           e.preventDefault();
+           $('#resetPasswordBtn').html("Processing....").attr('disabled' , true);
+           if ($('#resetEmail').val() == ''){
+               $('#resetEmail').addClass('is-invalid');
+               $('#resetPasswordBtn').html("Reset Password").attr('disabled' , false);
+           }else{
+               $('#resetEmail').removeClass('is-invalid');
+
+               $.ajax({
+                   url:siteUrl+ 'admin/action.php',
+                   method:'post' ,
+                   data: $('#forgotten-password-form').serialize() + '&action=reset-password',
+                   success:function (response) {
+                       $('#resetPasswordBtn').html("Reset Password").attr('disabled' , false);
+                        $('#resetPasswordResponse').html(response);
+                   } ,
+                   error: function (response) {
+                       console.log('Something went wrong!');
+
+                   }
+               });
+           }
+
+
+
+
+
+       }
+
+    });
+
+
+    $('#setNewPasswordBtn').click(function (e) {
+        if ($('#new-password-form')[0].checkValidity()){
+            e.preventDefault();
+
+            if ($('#new_password').val() ==  ''){
+                $('#new_password').addClass('is-invalid');
+            }else {
+                $('#new_password').removeClass('is-invalid');
+            }
+
+            if ($('#new_confirm_password').val() ==  ''){
+                $('#new_confirm_password').addClass('is-invalid');
+
+            }else {
+                $('#new_confirm_password').removeClass('is-invalid');
+            }
+
+            if ($('#new_password').val() !=  '' && $('#new_confirm_password').val() !=  '' ){
+                if ($('#new_password').val() !== $('#new_confirm_password').val()){
+                    $('#password_error').removeClass('d-none');
+                }else {
+
+                    $('#password_error').addClass('d-none');
+
+                    $('#setNewPasswordBtn').html("Processing....").attr('disabled' , true);
+
+                    $.ajax({
+                        url:siteUrl+ 'admin/action.php',
+                        method:'post' ,
+                        data: $('#new-password-form').serialize() + '&action=update-password',
+                        success:function (response) {
+                            $('#setNewPasswordBtn').html("Reset Password").attr('disabled' , false);
+                            if (response == 'ok'){
+                                $('#resetPasswordResponse').html(response);
+                                // window.location = 'index.php'
+                            }else {
+                                $('#resetPasswordResponse').html(response);
+                            }
+
+                        } ,
+                        error: function (response) {
+                            console.log('Something went wrong!');
+
+                        }
+                    });
+
+                }
+            }
+
+        }
+
+    });
+
+
 });
