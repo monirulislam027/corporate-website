@@ -1,7 +1,7 @@
 <?php
 
 require_once '../vendor/autoload.php';
-
+session_start();
 use App\Classes\Auth;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;

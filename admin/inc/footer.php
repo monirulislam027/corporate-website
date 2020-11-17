@@ -15,6 +15,7 @@
 <script src="../../assets/vendor/datatable/jquery.dataTables.min.js"></script>
 <script src="../../assets/vendor/datatable/dataTables.bootstrap4.min.js"></script>
 <script src="../../assets/vendor/datepicker/bootstrap-datepicker.js"></script>
+<script src="../../assets/vendor/toaster/toastr.min.js"></script>
 <script src="../../assets/admin/js/script.js"></script>
 
 </body>

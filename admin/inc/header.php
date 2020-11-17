@@ -1,6 +1,6 @@
 <?php
 require_once '../vendor/autoload.php';
-
+session_start();
 use App\Classes\Auth;
 
 $auth = new Auth();
@@ -18,11 +18,14 @@ $auth->isLogedIn() ? false:header('location:login.php');
 
     <title><?= ucwords(basename($_SERVER['PHP_SELF'] , '.php')) ?> | Ban Coders</title>
 
+    <link rel="icon" href="../../assets/favicon.ico"  sizes="16x16">
+
     <link rel="stylesheet" href="../../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../assets/vendor/datatable/dataTables.bootstrap4.min.css">
 
     <link rel="stylesheet" href="../../assets/vendor/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../../assets/vendor/datepicker/datepicker.css">
+    <link rel="stylesheet" href="../../assets/vendor/toaster/toastr.min.css">
     <link rel="stylesheet" href="../../assets/admin/css/style.css">
 </head>
 <body>

@@ -8,9 +8,11 @@ class Config
 {
     public $conn;
 
+    public $base_url = 'http://dcw.test/';
+
     public function __construct()
     {
-        session_start();
+//        session_start();
         $this->conn = new mysqli('localhost' , 'root' , '' , 'dcw');
         if ($this->conn->connect_error){
             die($this->conn->connect_error);
@@ -29,6 +31,7 @@ class Config
     }
 
     public function isLogedIn(){
+//        session_start();
         return isset($_SESSION['user_email']);
     }
 

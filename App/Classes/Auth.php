@@ -44,7 +44,6 @@ class Auth extends Config
 
     public function password_update($email , $password)
     {
-//        return $this->conn->query("Update `users` Set `password` = '$password' where `email` = '$email'");
         return $this->conn->query("UPDATE `users` SET `token` = '' , `password` = '$password' WHERE `email` = '$email' ");
 
     }
