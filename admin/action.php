@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 
 require_once '../vendor/autoload.php';
 
@@ -50,7 +48,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'login'){
                     setcookie('user_password' , '' , -time()+ (7 * 24 * 60 * 60));
                 }
                 echo 'ok';
-                $_SESSION['user_email'] = base64_encode($email);
+                $_SESSION['user_email'] = base64_encode($row['email']);
+                $_SESSION['user_name'] = ($row['name']);
+                $_SESSION['user_id'] = base64_encode($row['id']);
             }else{
                 echo $auth->showMessage('warning' , 'Your account is inactive!');
             }
