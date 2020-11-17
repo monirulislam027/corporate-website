@@ -20,46 +20,46 @@ $(document).ready(function () {
     $('#create-form').on('submit' , function (event) {
 
 
-        // if ($('#create-form')[0].checkValidity()){
+        if ($('#create-form')[0].checkValidity()){
 
             event.preventDefault();
 
-            //
-            // if ($('#title').val() == ''){
-            //     $('#title').addClass('is-invalid');
-            // }else {
-            //     $('#title').removeClass('is-invalid');
-            // }
-            //
-            // if ($('#sub_title').val() == ''){
-            //     $('#sub_title').addClass('is-invalid');
-            // }else {
-            //     $('#sub_title').removeClass('is-invalid');
-            // }
-            //
-            // if ($('#start_date').val() == ''){
-            //     $('#start_date').addClass('is-invalid');
-            // }else {
-            //     $('#start_date').removeClass('is-invalid');
-            // }
-            //
-            // if ($('#end_date').val() == ''){
-            //     $('#end_date').addClass('is-invalid');
-            // }else {
-            //     $('#end_date').removeClass('is-invalid');
-            // }
-            //
-            // if ($('#url').val() == ''){
-            //     $('#url').addClass('is-invalid');
-            // }else {
-            //     $('#url').removeClass('is-invalid');
-            // }
+
+            if ($('#title').val() == ''){
+                $('#title').addClass('is-invalid');
+            }else {
+                $('#title').removeClass('is-invalid');
+            }
+
+            if ($('#sub_title').val() == ''){
+                $('#sub_title').addClass('is-invalid');
+            }else {
+                $('#sub_title').removeClass('is-invalid');
+            }
+
+            if ($('#start_date').val() == ''){
+                $('#start_date').addClass('is-invalid');
+            }else {
+                $('#start_date').removeClass('is-invalid');
+            }
+
+            if ($('#end_date').val() == ''){
+                $('#end_date').addClass('is-invalid');
+            }else {
+                $('#end_date').removeClass('is-invalid');
+            }
+
+            if ($('#url').val() == ''){
+                $('#url').addClass('is-invalid');
+            }else {
+                $('#url').removeClass('is-invalid');
+            }
 
             let formData = new FormData(this);
             formData.append('action' , $(this).data('url'));
 
-            // if ($('#title').val() != '' && $('#sub_title').val() != ''  && $('#start_date').val() != ''   && $('#end_date').val() != ''   && $('#url').val() != '' ){
-            //     $('.loader').show();
+            if ($('#title').val() != '' && $('#sub_title').val() != ''  && $('#start_date').val() != ''   && $('#end_date').val() != ''   && $('#url').val() != '' ){
+                $('.loader').show();
                 $.ajax({
                     url:'http://dcw.test/admin/inc/action.php' ,
                     method:'post' ,
@@ -78,16 +78,15 @@ $(document).ready(function () {
                             } , 3500);
                         }else {
                             toastr.error(response.message)
-                            console.log(response);
                         }
                         $('.loader').hide();
                     }
                 });
 
-        //     }
-        //
-        //
-        // }
+            }
+
+
+        }
 
 
 
