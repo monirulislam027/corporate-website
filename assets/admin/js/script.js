@@ -26,10 +26,6 @@ $(document).ready(function () {
             success: function (response) {
                 console.log('pl');
                 $('.loader').hide();
-            },
-            error:function () {
-                console.log('error');
-                $('.loader').hide();
             }
         });
 
