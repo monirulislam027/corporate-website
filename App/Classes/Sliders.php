@@ -43,4 +43,16 @@ class Sliders extends Config
     public function slider_delete($id){
         return $this->conn->query("Delete From `sliders` WHERE `id` = '$id'");
     }
+
+//    slider with id
+    public function slider($id){
+        return $this->conn->query("SELECT * FROM `sliders` WHERE `id` = '$id'");
+    }
+
+
+
+
+
+
+
 }

@@ -171,7 +171,7 @@ $(document).ready(function () {
                                 response.message,
                                 'success'
                             )
-                            $('.remove-row-' + id).hide();
+                            $('.remove-row-' + id).remove();
                         }else {
                             Swal.fire(
                                 'Deleted!',
