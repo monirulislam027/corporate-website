@@ -111,3 +111,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'slider-active'){
 
 
 }
+
+if (isset($_POST['action']) && $_POST['action'] == 'slider-delete'){
+
+
+    $id = (int)($_POST['id']);
+
+    $result = $sliders->slider_delete($id);
+
+    if ($result){
+        $data['message'] = 'Slider deleted successfully!';
+    }else{
+        $data['error'] = 'true';
+        $data['message'] = 'Slider deleted failed!';
+    }
+
+    echo json_encode($data);
+
+
+}

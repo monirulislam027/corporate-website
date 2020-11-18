@@ -1,7 +1,11 @@
 /* image preview*/
 .image-preview{
-    width: 220px;
+    width: 150px;
     height: 100px;
+}
+
+.action-bars{
+    width: 135px !important;
 }
 
 .loader {

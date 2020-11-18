@@ -39,4 +39,8 @@ class Sliders extends Config
     public function slider_inactive($id){
         return $this->conn->query("UPDATE `sliders` SET `status` = 0 WHERE `id` = '$id'");
     }
+
+    public function slider_delete($id){
+        return $this->conn->query("Delete From `sliders` WHERE `id` = '$id'");
+    }
 }

@@ -40,23 +40,23 @@ $result = $slider->index();
                 while ($row1 = $result->fetch_assoc()){
 
                 ?>
-                    <tr>
+                    <tr class="remove-row-<?= ($row1['id'])?>">
                         <td><?= $sr ?></td>
                         <td><?= $row1['title'] ?></td>
                         <td><?= $row1['sub_title'] ?></td>
                         <td><img class=" image-preview" src="<?= $slider->base_url.'uploads/sliders/'. $row1['image'] ?>" alt="<?= $row1['title'] ?>"></td>
                         <td><?= $row1['start_date'].' - '.$row1['end_date'] ?></td>
                         <td><?= $row1['status'] == 1 ?'<span class="text-success">Active</span>':'<span class="text-danger">Inactive</span>' ?></td>
-                        <td>
+                        <td class="action-bars">
 
                             <?php if ($row1['status'] == 1){ ?>
-                                <button id="slider_inactive" data-url-id="<?= base64_encode($row1['id']) ?>" type="button" class="btn btn-warning btn-sm text-white"><i class="fas fa-chevron-up"></i></button>
+                                <button data-url-id="<?= base64_encode($row1['id']) ?>" type="button" class="btn btn-warning btn-sm text-white slider_inactive"><i class="fas fa-chevron-up"></i></button>
                             <?php }else{ ?>
-                                <button id="slider_active" data-url-id="=<?= base64_encode($row1['id']) ?>" type="button" class="btn btn-info btn-sm"><i class="fas fa-chevron-down"></i></button>
+                                <button data-url-id="=<?= base64_encode($row1['id']) ?>" type="button" class="btn btn-info btn-sm slider_active"><i class="fas fa-chevron-down"></i></button>
                             <?php } ?>
 
                             <button data-url-id="<?= base64_encode($row1['id']) ?>" type="button" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
-                            <button data-url-id="<?= base64_encode($row1['id']) ?>" type="button" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
+                            <button  data-url-id="<?= ($row1['id']) ?>" type="button" class="btn btn-danger btn-sm remove_slider"><i class="fa fa-trash-alt"></i></button>
 
                         </td>
                     </tr>

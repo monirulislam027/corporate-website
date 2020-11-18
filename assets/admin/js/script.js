@@ -91,7 +91,7 @@ $(document).ready(function () {
 
 
     //  slider active
-    $('#slider_active').click(function () {
+    $('.slider_active').on('click' , function () {
 
         let id = $(this).data('url-id');
         $('.loader').show();
@@ -117,7 +117,7 @@ $(document).ready(function () {
     });
 
     //  slider inactive
-    $('#slider_inactive').click(function () {
+    $('.slider_inactive').on('click',function () {
 
         let id = $(this).data('url-id');
         $('.loader').show();
@@ -128,11 +128,10 @@ $(document).ready(function () {
             success: function (response) {
                 $('.loader').hide();
                 if (! response.error){
-                    toastr.success(response.message , {timeOut: 3000});
+                    toastr.success(response.message , {timeOut: 1000});
                     setTimeout(function () {
                        location.reload();
-
-                    } , 3500);
+                    } , 1300);
                 }else {
                     toastr.error(response.message)
                 }
@@ -142,6 +141,58 @@ $(document).ready(function () {
 
 
     });
+
+//    remove slider
+    $('.remove_slider').on('click' ,function () {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                let id = $(this).data('url-id');
+
+                $('.loader').show();
+                $.ajax({
+                    url:'http://dcw.test/admin/inc/action.php' ,
+                    method:'post' ,
+                    data: { 'id':id , 'action': 'slider-delete' },
+                    success: function (response) {
+                        $('.loader').hide();
+                        if (! response.error){
+                            Swal.fire(
+                                'Deleted!',
+                                response.message,
+                                'success'
+                            )
+                            $('.remove-row-' + id).hide();
+                        }else {
+                            Swal.fire(
+                                'Deleted!',
+                                response.message,
+                                'error'
+                            )
+                        }
+
+                    }
+                });
+            }
+        })
+
+
+
+
+
+
+
+
+    })
 
 });
 

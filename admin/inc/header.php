@@ -25,6 +25,7 @@ $auth->isLogedIn() ? false:header('location:login.php');
     <link rel="stylesheet" href="../../assets/vendor/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="../../assets/vendor/datepicker/datepicker.css">
     <link rel="stylesheet" href="../../assets/vendor/toaster/toastr.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/sweetalert/sweetalert2.min.css">
     <link rel="stylesheet" href="../../assets/admin/css/style.css">
 </head>
 <body>
