@@ -96,7 +96,7 @@ $(document).ready(function () {
     $('#signInBtn').click(function (e) {
         if (loginForm[0].checkValidity()) {
             e.preventDefault();
-            $('#signInBtn').html("Processing.....").attr('disabled' , true);
+
             if ($('#loginEmail').val() == ''){
                 $('#loginEmail').addClass('is-invalid');
             }else{
@@ -110,7 +110,7 @@ $(document).ready(function () {
             }
 
             if ($('#loginEmail').val() != '' && $('#loginPassword').val() != ''){
-
+                $('#signInBtn').html("Processing.....").attr('disabled' , true);
                 $.ajax({
                     url:siteUrl+ 'admin/action.php',
                     method:'post' ,

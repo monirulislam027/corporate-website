@@ -30,4 +30,13 @@ class Sliders extends Config
     {
         return "Please enter a " .$field_name;
     }
+
+
+    public function slider_active($id){
+        return $this->conn->query("UPDATE `sliders` SET `status` = 1 WHERE `id` = '$id'");
+    }
+
+    public function slider_inactive($id){
+        return $this->conn->query("UPDATE `sliders` SET `status` = 0 WHERE `id` = '$id'");
+    }
 }

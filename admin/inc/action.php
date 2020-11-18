@@ -13,8 +13,6 @@ $data= [ 'error' => false ];
 
 if (isset($_POST['action']) && $_POST['action'] == 'save-slider'){
 
-
-
     if(isset($_POST['title']) && isset($_POST['sub_title']) && isset($_POST['start_date']) && isset($_POST['end_date']) && isset($_POST['url']) && isset($_POST['status']) && !empty($_FILES['image']['name'])){
 
         $title = $_POST['title'];
@@ -75,5 +73,41 @@ if (isset($_POST['action']) && $_POST['action'] == 'save-slider'){
     }
 
     echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'slider-inactive'){
+
+    $id = (int)base64_decode($_POST['id']);
+
+    $result = $sliders->slider_inactive($id);
+
+    if ($result){
+        $data['message'] = 'Slider deactivated successfully!';
+    }else{
+        $data['error'] = 'true';
+        $data['message'] = 'Slider updated status failed!';
+    }
+
+    echo json_encode($data);
+
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'slider-active'){
+
+    $id = (int)base64_decode($_POST['id']);
+
+    $result = $sliders->slider_active($id);
+
+    if ($result){
+        $data['message'] = 'Slider activated successfully!';
+    }else{
+        $data['error'] = 'true';
+        $data['message'] = 'Slider status updated failed!';
+    }
+
+    echo json_encode($data);
+
 
 }

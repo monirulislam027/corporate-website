@@ -2,6 +2,7 @@
 require_once '../vendor/autoload.php';
 
 use App\Classes\Auth;
+session_start();
 
 $auth = new Auth();
 $auth->isLogedIn() ? header('location:index.php'):false;

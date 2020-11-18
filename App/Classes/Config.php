@@ -31,7 +31,7 @@ class Config
     }
 
     public function isLogedIn(){
-//        session_start();
+        session_start();
         return isset($_SESSION['user_email']);
     }
 

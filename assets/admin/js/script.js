@@ -12,11 +12,12 @@ $(document).ready(function () {
     $('#datatable').dataTable();
     // date picker
     $('.datepicker').datepicker({
-        format:"dd MM yyyy",
+        format:"dd M yyyy",
         autoclose: true ,
         todayHighlight: true
     });
 
+    // create form
     $('#create-form').on('submit' , function (event) {
 
 
@@ -71,7 +72,7 @@ $(document).ready(function () {
 
                         if (! response.error){
                             $('#create-form')[0].reset();
-                            toastr.success(response.message , {timeOut: 3000})
+                            toastr.success(response.message , {timeOut: 3000});
                             setTimeout(function () {
                                 window.location = 'sliders.php'
 
@@ -84,16 +85,63 @@ $(document).ready(function () {
                 });
 
             }
-
-
         }
 
-
-
-
-
-
     })
+
+
+    //  slider active
+    $('#slider_active').click(function () {
+
+        let id = $(this).data('url-id');
+        $('.loader').show();
+        $.ajax({
+            url:'http://dcw.test/admin/inc/action.php' ,
+            method:'post' ,
+            data: { 'id':id , 'action': 'slider-active' },
+            success: function (response) {
+                $('.loader').hide();
+                if (! response.error){
+                    toastr.success(response.message , {timeOut: 3000});
+                    setTimeout(function () {
+                        location.reload();
+                    } , 3500);
+                }else {
+                    toastr.error(response.message)
+                }
+
+            }
+        });
+
+
+    });
+
+    //  slider inactive
+    $('#slider_inactive').click(function () {
+
+        let id = $(this).data('url-id');
+        $('.loader').show();
+        $.ajax({
+            url:'http://dcw.test/admin/inc/action.php' ,
+            method:'post' ,
+            data: { 'id':id , 'action': 'slider-inactive' },
+            success: function (response) {
+                $('.loader').hide();
+                if (! response.error){
+                    toastr.success(response.message , {timeOut: 3000});
+                    setTimeout(function () {
+                       location.reload();
+
+                    } , 3500);
+                }else {
+                    toastr.error(response.message)
+                }
+
+            }
+        });
+
+
+    });
 
 });
 

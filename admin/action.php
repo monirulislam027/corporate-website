@@ -13,55 +13,94 @@ $mail = new PHPMailer(true);
 
 if (isset($_POST['action']) && $_POST['action'] == 'register'){
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['r_password'] , PASSWORD_DEFAULT);
+    $message = $auth->showMessage('warning' , 'Something went wrong!');
 
-    if($auth->user_exist($email) > 0){
-        echo $auth->showMessage('danger' , 'User already exists in our system!');
-    }else{
-        if ($auth->register($name ,$email , $password)){
-            echo 'ok';
-            $_SESSION['user_email'] = base64_encode($email);
+    if (isset($_POST['name']) &&  isset($_POST['email'])  && isset($_POST['r_password']) && isset($_POST['c_password']) ){
+
+        if ( $_POST['name'] != '' && $_POST['email'] != '' && $_POST['r_password'] != ''  && $_POST['c_password'] != '' ){
+
+            if ($_POST['r_password'] === $_POST['c_password'] ){
+
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $password = password_hash($_POST['r_password'] , PASSWORD_DEFAULT);
+                $message = $auth->showMessage('danger' , 'User already exists in our system!');
+                if (! $auth->user_exist($email) > 0){
+                    if ($auth->register($name ,$email , $password)){
+                        $message = 'ok';
+                        $_SESSION['user_email'] = base64_encode($email);
+                    }else{
+                        $message = $auth->showMessage('danger' , 'Something Went Wrong ! Try again!');
+                    }
+                }
+            }
+            else{
+                $message = $auth->showMessage('danger' , "Password didn't matched!");
+            }
+
         }else{
-            echo $auth->showMessage('danger' , 'Something Went Wrong');
+            if ($_POST['name'] == ''){
+                $message = $auth->showMessage('danger' , 'Enter your name');
+            }elseif ($_POST['email'] == ''){
+                $message = $auth->showMessage('danger' , 'Enter your email address');
+            }elseif ($_POST['r_password'] == ''){
+                $message = $auth->showMessage('danger' , 'Enter your password');
+            }elseif ($_POST['c_password'] == ''){
+                $message = $auth->showMessage('danger' , 'Confirm your password');
+            }else{
+                $message = $auth->showMessage('warning' , 'Something went wrong!');
+            }
         }
     }
+
+    echo $message;
+
 }
 
 if (isset($_POST['action']) && $_POST['action'] == 'login'){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $remember_me = isset($_POST['remember_me']);
+    if (isset($_POST['email']) && $_POST['email'] != '' && isset($_POST['password']) && $_POST['password'] != ''){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $remember_me = isset($_POST['remember_me']);
 
-    $result = $auth->login($email);
+        $result = $auth->login($email);
 
-    if($result->num_rows === 1){
-        $row = $result->fetch_assoc();
-        if (password_verify($password , $row['password'])){
-            if ($row['status'] == 1){
-                if ($remember_me){
-                    setcookie('user_email' , base64_encode($email) , time()+ (7 * 24 * 60 * 60));
-                    setcookie('user_password' , base64_encode($password )  , time()+ (7 * 24 * 60 * 60));
+        if($result->num_rows === 1){
+            $row = $result->fetch_assoc();
+            if (password_verify($password , $row['password'])){
+                if ($row['status'] == 1){
+                    if ($remember_me){
+                        setcookie('user_email' , base64_encode($email) , time()+ (7 * 24 * 60 * 60));
+                        setcookie('user_password' , base64_encode($password )  , time()+ (7 * 24 * 60 * 60));
+                    }else{
+                        setcookie('user_email' , '' , -time()+ (7 * 24 * 60 * 60));
+                        setcookie('user_password' , '' , -time()+ (7 * 24 * 60 * 60));
+                    }
+                    echo 'ok';
+                    $_SESSION['user_email'] = base64_encode($row['email']);
+                    $_SESSION['user_name'] = ($row['name']);
+                    $_SESSION['user_id'] = base64_encode($row['id']);
                 }else{
-                    setcookie('user_email' , '' , -time()+ (7 * 24 * 60 * 60));
-                    setcookie('user_password' , '' , -time()+ (7 * 24 * 60 * 60));
+                    echo $auth->showMessage('warning' , 'Your account is inactive!');
                 }
-                echo 'ok';
-                $_SESSION['user_email'] = base64_encode($row['email']);
-                $_SESSION['user_name'] = ($row['name']);
-                $_SESSION['user_id'] = base64_encode($row['id']);
+
             }else{
-                echo $auth->showMessage('warning' , 'Your account is inactive!');
+                echo $auth->showMessage('danger' , 'These credential are not match in our system!');
             }
 
         }else{
             echo $auth->showMessage('danger' , 'These credential are not match in our system!');
         }
-
     }else{
-        echo $auth->showMessage('danger' , 'These credential are not match in our system!');
+        if (isset($_POST['email']) && $_POST['email'] == '' ){
+            echo $auth->showMessage('warning' , 'Enter your  email');
+        }elseif(isset($_POST['password']) && $_POST['password'] == '' ){
+            echo $auth->showMessage('warning' , 'Enter your password');
+        }else{
+            echo $auth->showMessage('info' , 'Something went wrong!');
+        }
     }
+
 }
 
 

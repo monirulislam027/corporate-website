@@ -9,7 +9,6 @@ use PHPMailer\PHPMailer\Exception;
 
 class Auth extends Config
 {
-
     public function register($name , $email , $password)
     {
         $result = $this->conn->query("Insert Into `users` (`name` , `email` , `password`) VALUES ('$name' , '$email' , '$password')");
