@@ -12,138 +12,84 @@ $(document).ready(function () {
     $('#datatable').dataTable();
     // date picker
     $('.datepicker').datepicker({
-        format:"dd M yyyy",
-        autoclose: true ,
+        format: "dd M yyyy",
+        autoclose: true,
         todayHighlight: true
     });
 
     // create form
-    $('#create-form').on('submit' , function (event) {
+    $('#slider-form').on('submit', function (event) {
 
 
-        if ($('#create-form')[0].checkValidity()){
+        if ($('#slider-form')[0].checkValidity()) {
 
             event.preventDefault();
 
 
-            if ($('#title').val() == ''){
+            if ($('#title').val() == '') {
                 $('#title').addClass('is-invalid');
-            }else {
+            } else {
                 $('#title').removeClass('is-invalid');
             }
 
-            if ($('#sub_title').val() == ''){
+            if ($('#sub_title').val() == '') {
                 $('#sub_title').addClass('is-invalid');
-            }else {
+            } else {
                 $('#sub_title').removeClass('is-invalid');
             }
 
-            if ($('#start_date').val() == ''){
+            if ($('#start_date').val() == '') {
                 $('#start_date').addClass('is-invalid');
-            }else {
+            } else {
                 $('#start_date').removeClass('is-invalid');
             }
 
-            if ($('#end_date').val() == ''){
+            if ($('#end_date').val() == '') {
                 $('#end_date').addClass('is-invalid');
-            }else {
+            } else {
                 $('#end_date').removeClass('is-invalid');
             }
 
-            if ($('#url').val() == ''){
+            if ($('#url').val() == '') {
                 $('#url').addClass('is-invalid');
-            }else {
+            } else {
                 $('#url').removeClass('is-invalid');
             }
 
             let formData = new FormData(this);
-            formData.append('action' , $(this).data('url'));
+            formData.append('action', $(this).data('url'));
 
-            if ($('#title').val() != '' && $('#sub_title').val() != ''  && $('#start_date').val() != ''   && $('#end_date').val() != ''   && $('#url').val() != '' ){
+            if ($('#title').val() != '' && $('#sub_title').val() !== '' && $('#start_date').val() !== '' && $('#end_date').val() != '' && $('#url').val() != '') {
                 $('.loader').show();
                 $.ajax({
-                    url:'http://dcw.test/admin/inc/action.php' ,
-                    method:'post' ,
+                    url: 'http://dcw.test/admin/inc/action.php',
+                    method: 'post',
                     processData: false,
-                    contentType:false,
-                    dataType:'json',
+                    contentType: false,
+                    dataType: 'json',
                     data: formData,
                     success: function (response) {
-
-                        if (! response.error){
-                            $('#create-form')[0].reset();
-                            toastr.success(response.message , {timeOut: 3000});
+                        $('.loader').hide();
+                        if (!response.error) {
+                            toastr.success(response.message, {timeOut: 3000});
                             setTimeout(function () {
                                 window.location = 'sliders.php'
 
-                            } , 3500);
-                        }else {
+                            }, 3500);
+                        } else {
                             toastr.error(response.message)
                         }
-                        $('.loader').hide();
+
                     }
                 });
 
             }
         }
 
-    })
-
-
-    //  slider active
-    $('.slider_active').on('click' , function () {
-
-        let id = $(this).data('url-id');
-        $('.loader').show();
-        $.ajax({
-            url:'http://dcw.test/admin/inc/action.php' ,
-            method:'post' ,
-            data: { 'id':id , 'action': 'slider-active' },
-            success: function (response) {
-                $('.loader').hide();
-                if (! response.error){
-                    toastr.success(response.message , {timeOut: 3000});
-                    setTimeout(function () {
-                        location.reload();
-                    } , 3500);
-                }else {
-                    toastr.error(response.message)
-                }
-
-            }
-        });
-
-
-    });
-
-    //  slider inactive
-    $('.slider_inactive').on('click',function () {
-
-        let id = $(this).data('url-id');
-        $('.loader').show();
-        $.ajax({
-            url:'http://dcw.test/admin/inc/action.php' ,
-            method:'post' ,
-            data: { 'id':id , 'action': 'slider-inactive' },
-            success: function (response) {
-                $('.loader').hide();
-                if (! response.error){
-                    toastr.success(response.message , {timeOut: 1000});
-                    setTimeout(function () {
-                       location.reload();
-                    } , 1300);
-                }else {
-                    toastr.error(response.message)
-                }
-
-            }
-        });
-
-
     });
 
 //    remove slider
-    $('.remove_slider').on('click' ,function () {
+    $('.remove_slider').on('click', function () {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -157,24 +103,23 @@ $(document).ready(function () {
             if (result.isConfirmed) {
 
                 let id = $(this).data('url-id');
-
                 $('.loader').show();
                 $.ajax({
-                    url:'http://dcw.test/admin/inc/action.php' ,
-                    method:'post' ,
-                    data: { 'id':id , 'action': 'slider-delete' },
+                    url: 'http://dcw.test/admin/inc/action.php',
+                    method: 'post',
+                    data: {'id': id, 'action': 'slider-delete'},
                     success: function (response) {
                         $('.loader').hide();
-                        if (! response.error){
+                        if (!response.error) {
                             Swal.fire(
                                 'Deleted!',
                                 response.message,
                                 'success'
                             )
                             $('.remove-row-' + id).remove();
-                        }else {
+                        } else {
                             Swal.fire(
-                                'Deleted!',
+                                'Error!',
                                 response.message,
                                 'error'
                             )
@@ -186,24 +131,45 @@ $(document).ready(function () {
         })
 
 
+    });
 
 
+    $('body').on('change', '.toggle-button', function () {
 
+        $('.loader').show();
+        let status = $(this).prop('checked') ? 1 : 0;
+        let id = $(this).data('id');
+        let action = $(this).data('action');
 
+        $.ajax({
+            url: 'http://dcw.test/admin/inc/action.php',
+            method: 'post',
+            data: {id: id, status: status, action: action},
+            success: function (response) {
 
+                if (!response.error) {
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message)
+                }
+                $('.loader').hide();
 
-    })
+            }
+        });
+
+    });
+
 
 });
 
 // image preview
 
-function imagePreview(file , targetBlock){
+function imagePreview(file, targetBlock) {
 
-    if (file.files && file.files[0]){
+    if (file.files && file.files[0]) {
         const reader = new FileReader();
         reader.onload = function (event) {
-            $(targetBlock).attr('src' , event.target.result)
+            $(targetBlock).attr('src', event.target.result)
         }
         reader.readAsDataURL(file.files[0]);
     }

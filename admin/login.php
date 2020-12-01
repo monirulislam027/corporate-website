@@ -2,13 +2,11 @@
 require_once '../vendor/autoload.php';
 
 use App\Classes\Auth;
-session_start();
 
 $auth = new Auth();
 $auth->isLogedIn() ? header('location:index.php'):false;
 
 ?>
-
 
 
 <!doctype html>
@@ -61,8 +59,8 @@ $auth->isLogedIn() ? header('location:index.php'):false;
 
                                 <div class="form-group">
                                     <div class="float-left">
-                                        <input type="checkbox" name="remember_me" id="rememberMe" class="custom-checkbox mr-1" <?= isset($_COOKIE['user_email']) ? 'checked': '' ?>
-                                        <label for="rememberMe" class="custom-control-label ml-2">Remember Me</label>
+                                        <input type="checkbox" name="remember_me" id="rememberMeCheck" class="custom-checkbox mr-1" <?= isset($_COOKIE['user_email']) ? 'checked': '' ?>
+                                        <label for="rememberMeCheck" class="custom-control-label ml-2">Remember Me</label>
                                     </div>
                                     <div class="float-right">
                                         <a href="javascript:" id="showForgotForm" class="text-decoration-none"> Forgot Password ?</a>

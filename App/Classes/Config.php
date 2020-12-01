@@ -35,4 +35,13 @@ class Config
         return isset($_SESSION['user_email']);
     }
 
+
+    public function titleGenerate(){
+        $page_name =  basename($_SERVER['PHP_SELF'] , '.php');
+        $title = str_replace('-' , ' ' , $page_name);
+        $title = str_replace('_' , ' ' , $title);
+
+        return ucwords($title);
+    }
+
 }

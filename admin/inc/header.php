@@ -15,7 +15,7 @@ $auth->isLogedIn() ? false:header('location:login.php');
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title><?= ucwords(basename($_SERVER['PHP_SELF'] , '.php')) ?> | Ban Coders</title>
+    <title><?= $auth->titleGenerate() ?> | Ban Coders</title>
 
     <link rel="icon" href="../../assets/favicon.ico"  sizes="16x16">
 
@@ -26,6 +26,7 @@ $auth->isLogedIn() ? false:header('location:login.php');
     <link rel="stylesheet" href="../../assets/vendor/datepicker/datepicker.css">
     <link rel="stylesheet" href="../../assets/vendor/toaster/toastr.min.css">
     <link rel="stylesheet" href="../../assets/vendor/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet" href="../../assets/vendor/bootstraptoggle/bootstrap-toggle.min.css">
     <link rel="stylesheet" href="../../assets/admin/css/style.css">
 </head>
 <body>
@@ -45,7 +46,7 @@ $auth->isLogedIn() ? false:header('location:login.php');
                     <a class="nav-link" href="dashboard.php" ><i class="fa fa-home"></i> Dashboard</a>
                 </li>
 
-                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'add slider.php') || basename($_SERVER['PHP_SELF']) === 'sliders.php'  ? 'active':'' ?>">
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'add-slider.php') || basename($_SERVER['PHP_SELF']) === 'sliders.php'  ? 'active':'' ?>">
                     <a class="nav-link" href="sliders.php" ><i class="fa fa-sliders-h "></i> Slider</a>
                 </li>
 

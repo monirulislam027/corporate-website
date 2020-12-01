@@ -14,7 +14,7 @@
         <div class="col-md-8 ">
             <div class="card">
                 <div class="card-body">
-                    <form id="create-form" data-url = 'save-slider'>
+                    <form id="slider-form" data-url = 'save-slider'>
                         <div class="form-group row">
                             <label for="title" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">

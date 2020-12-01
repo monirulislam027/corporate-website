@@ -3,7 +3,9 @@
     width: 150px;
     height: 100px;
 }
-
+.toggle-handle{
+    background: #fff !important;
+}
 .action-bars{
     width: 135px !important;
 }

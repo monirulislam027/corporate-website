@@ -9,10 +9,10 @@ class Sliders extends Config
 
     public function index()
     {
-       return $this->conn->query("SELECT * FROM `sliders` ORDER BY `id` DESC ");
+        return $this->conn->query("SELECT * FROM `sliders` ORDER BY `id` DESC ");
     }
 
-    public function save_slider($title , $sub_title , $start_date , $end_date , $url , $status , $imageNameToStore)
+    public function save_slider($title, $sub_title, $start_date, $end_date, $url, $status, $imageNameToStore)
     {
         /** @var  $id */
         session_start();
@@ -28,31 +28,41 @@ class Sliders extends Config
 
     public function slider_error_message($field_name)
     {
-        return "Please enter a " .$field_name;
+        return "Please enter a " . $field_name;
     }
 
 
-    public function slider_active($id){
-        return $this->conn->query("UPDATE `sliders` SET `status` = 1 WHERE `id` = '$id'");
-    }
 
-    public function slider_inactive($id){
-        return $this->conn->query("UPDATE `sliders` SET `status` = 0 WHERE `id` = '$id'");
-    }
-
-    public function slider_delete($id){
+    public function slider_delete($id)
+    {
         return $this->conn->query("Delete From `sliders` WHERE `id` = '$id'");
     }
 
 //    slider with id
-    public function slider($id){
+    public function slider($id)
+    {
         return $this->conn->query("SELECT * FROM `sliders` WHERE `id` = '$id'");
     }
 
+//    slider update with id
+    public function slider_update($title, $sub_title, $start_date, $end_date, $url, $status, $image_name , $id)
+    {
+        return $this->conn->query("UPDATE `sliders` SET `title` = '$title' , `sub_title` = '$start_date' , `end_date` = '$end_date' , `url` = '$url' , `status` = '$status' , `image` = '$image_name' WHERE `id` = '$id'");
+    }
 
+//    slider find
+    public function slider_find($id)
+    {
+        $slider = $this->conn->query("SELECT * FROM `sliders` WHERE `id` = '$id'");
 
+        return $slider->fetch_assoc();
+    }
 
-
+//    slider update
+    public function slider_status_update($id ,$status)
+    {
+        return $this->conn->query("UPDATE `sliders` SET `status` = '$status' WHERE `id` = '$id'");
+    }
 
 
 }
