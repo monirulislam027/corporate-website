@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    const baseUrl = 'http://dcw.test';
     //toaster message option
     toastr.options = {
         "newestOnTop": true,
@@ -89,7 +90,7 @@ $(document).ready(function () {
     });
 
 //    remove slider
-    $('.remove_slider').on('click', function () {
+    $('.remove_item').on('click', function () {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -102,12 +103,13 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
 
+                let action = $(this).data('action');
                 let id = $(this).data('url-id');
                 $('.loader').show();
                 $.ajax({
                     url: 'http://dcw.test/admin/inc/action.php',
                     method: 'post',
-                    data: {'id': id, 'action': 'slider-delete'},
+                    data: {'id': id, action : action},
                     success: function (response) {
                         $('.loader').hide();
                         if (!response.error) {
@@ -146,12 +148,6 @@ $(document).ready(function () {
             method: 'post',
             data: {id: id, status: status, action: action},
             success: function (response) {
-
-                if (!response.error) {
-                    toastr.success(response.message);
-                } else {
-                    toastr.error(response.message)
-                }
                 $('.loader').hide();
 
             }
@@ -160,6 +156,54 @@ $(document).ready(function () {
     });
 
 
+//    works menu form
+
+    // create form
+    $('#works-menu-form').on('submit', function (event) {
+
+
+        if ($('#works-menu-form')[0].checkValidity()) {
+
+            event.preventDefault();
+
+            let action = $(this).data('url');
+
+            $('.loader').show();
+            $.ajax({
+                url: 'http://dcw.test/admin/inc/action.php',
+                method: 'post',
+                data: $('#works-menu-form').serialize() + '&action=' + action,
+                success: function (response) {
+                    $('.loader').hide();
+                    if (!response.error) {
+
+                        Swal.fire({
+                            title: 'Successful!',
+                            text: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Go Back'
+                        }).then((result) => {
+
+                            if (result.isConfirmed) {
+                                window.location = 'works-menu.php';
+                            }
+
+                        });
+                    } else {
+                        toastr.error(response.message)
+                    }
+
+                }
+            });
+
+
+        }
+    });
+
+
+//    jquery end
 });
 
 // image preview

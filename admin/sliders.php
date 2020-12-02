@@ -47,15 +47,16 @@ $result = $slider->index();
                 <td><img class=" image-preview" src="<?= $slider->base_url . 'uploads/sliders/' . $row1['image'] ?>"
                          alt="<?= $row1['title'] ?>"></td>
                 <td><?= $row1['start_date'] . ' - ' . $row1['end_date'] ?></td>
-                <td><input type="checkbox" class="toggle-button" data-id="<?= $row1['id'] ?>" data-action="slider-status-change"
+                <td><input type="checkbox" class="toggle-button" data-id="<?= $row1['id'] ?>"
+                           data-action="slider-status-change"
                            data-onstyle="primary" data-offstyle="danger" data-toggle="toggle" data-on="Active"
                            data-off="Inactive" <?= $row1['status'] == 1 ? 'checked' : '' ?> ></td>
                 <td class="action-bars">
 
                     <a href="edit-slider.php?action=edit-slider&data=<?= base64_encode($row1['id']) ?>"
                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
-                    <button data-url-id="<?= ($row1['id']) ?>" type="button"
-                            class="btn btn-danger btn-sm remove_slider"><i class="fa fa-trash-alt"></i></button>
+                    <button data-url-id="<?= ($row1['id']) ?>" type="button" data-action="slider-delete"
+                            class="btn btn-danger btn-sm remove_item"><i class="fa fa-trash-alt"></i></button>
 
                 </td>
             </tr>

@@ -44,4 +44,17 @@ class Config
         return ucwords($title);
     }
 
+    public function slug($text = ''){
+
+        return strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $text)));
+
+    }
+
+    public function error_message($field_name)
+    {
+        return "Please enter a " . $field_name;
+    }
+
+
+
 }

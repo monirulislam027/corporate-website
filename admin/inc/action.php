@@ -5,8 +5,10 @@ header('content-type:application/json');
 require_once '../../vendor/autoload.php';
 
 use App\Classes\Sliders;
+use App\Classes\Works;
 
 $sliders = new Sliders();
+$works = new Works();
 
 $data = ['error' => false];
 
@@ -204,6 +206,95 @@ if (isset($_POST['action']) && $_POST['action'] == 'slider-status-change') {
         $data['error'] = 'true';
         $data['message'] = 'Status updated failed!';
     }
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-work-menu') {
+
+    if (isset($_POST['name']) && $_POST['name'] != '' && isset($_POST['status']) ){
+        $name = $_POST['name'];
+        $status = $_POST['status'];
+
+
+        $add_menu = $works->save_menu($name , $status);
+
+
+        if ($add_menu) {
+            $data['message'] = 'Works added successfully!';
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'Works added failed!';
+        }
+    }else{
+        $data['error'] = 'true';
+        $data['message'] = $works->error_message('name');
+    }
+
+    echo json_encode($data);
+
+}
+
+// work menu status update
+if (isset($_POST['action']) && $_POST['action'] == 'works-menu-status') {
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+
+    $status_update = $works->works_status_update($id , $status);
+
+    if ($status_update) {
+        $data['message'] = 'Status updated successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Status updated failed!';
+    }
+    echo json_encode($data);
+
+}
+
+// work menu update
+if (isset($_POST['action']) && $_POST['action'] == 'update-work-menu'){
+
+
+    if (isset($_POST['name']) && $_POST['name'] != '' && isset($_POST['status']) && isset($_POST['menu_id']) ){
+        $name = $_POST['name'];
+        $status = $_POST['status'];
+
+        $id = $_POST['menu_id'];
+        $id = base64_decode($id);
+        $id = (int)$id;
+
+        $add_menu = $works->work_menu_update($name , $status ,$id);
+
+
+        if ($add_menu) {
+            $data['message'] = 'Works updated successfully!';
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'Works updated failed!';
+        }
+    }else{
+        $data['error'] = 'true';
+        $data['message'] = $works->error_message('name');
+    }
+
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'works-menu-delete') {
+
+    $id = (int) $_POST['id'];
+
+    $delete = $works->works_menu_delete($id);
+
+    if ($delete) {
+        $data['message'] = 'Slider deleted successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Slider deleted failed!';
+    }
+
     echo json_encode($data);
 
 }
