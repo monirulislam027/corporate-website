@@ -56,5 +56,14 @@ class Config
     }
 
 
+    public function auth_user_id(){
+        session_start();
+        $user_id = $_SESSION['user_id'];
+        $user_id = base64_decode($user_id);
+        $user_id = (int)$user_id;
+        return $user_id;
+    }
+
+
 
 }

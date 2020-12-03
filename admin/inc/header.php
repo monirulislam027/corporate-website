@@ -59,7 +59,6 @@ $auth->isLogedIn() ? false : header('location:login.php');
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="works-menu.php">Menu</a>
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="works-items.php">Items</a>
                     </div>
                 </li>
@@ -71,7 +70,6 @@ $auth->isLogedIn() ? false : header('location:login.php');
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Profile</a>
-                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="logout.php">Log Out</a>
                     </div>
                 </li>

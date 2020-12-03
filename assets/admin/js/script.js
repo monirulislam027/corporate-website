@@ -105,11 +105,11 @@ $(document).ready(function () {
 
                 let action = $(this).data('action');
                 let id = $(this).data('url-id');
-                $('.loader').show();
+                // $('.loader').show();
                 $.ajax({
                     url: 'http://dcw.test/admin/inc/action.php',
                     method: 'post',
-                    data: {'id': id, action : action},
+                    data: {'id': id, action: action},
                     success: function (response) {
                         $('.loader').hide();
                         if (!response.error) {
@@ -118,8 +118,10 @@ $(document).ready(function () {
                                 response.message,
                                 'success'
                             )
-                            $('.remove-row-' + id).remove();
+                            console.log('.remove-row-' + id);
+                            $('#remove-row-' + id ).remove();
                         } else {
+
                             Swal.fire(
                                 'Error!',
                                 response.message,
@@ -200,6 +202,63 @@ $(document).ready(function () {
 
 
         }
+    });
+
+    /*
+    form with image
+     */
+    // create form
+    $('#image-form').on('submit', function (event) {
+
+
+        if ($('#image-form')[0].checkValidity()) {
+
+            event.preventDefault();
+            let formData = new FormData(this);
+            formData.append('action', $(this).data('url'));
+
+            $('.loader').show();
+            $.ajax({
+                url: 'http://dcw.test/admin/inc/action.php',
+                method: 'post',
+                processData: false,
+                contentType: false,
+                dataType: 'json',
+                data: formData,
+                success: function (response) {
+                    $('.loader').hide();
+                    if (!response.error) {
+
+                        Swal.fire({
+                            title: 'Successful!',
+                            text: response.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Go Back'
+                        }).then((result) => {
+
+                            if (result.isConfirmed) {
+                                window.location = response.r_url;
+                            }
+
+                        });
+
+
+                    } else {
+                        toastr.error(response.message)
+                    }
+
+                },
+                error: function (response) {
+                    $('.loader').hide();
+                    console.log('error');
+                }
+            });
+
+        }
+
+
     });
 
 
