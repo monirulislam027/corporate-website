@@ -48,3 +48,11 @@
     from {-webkit-transform: rotate(0deg);}
     to {-webkit-transform: rotate(360deg);}
 }
+
+
+/* about us */
+
+.about-us-form input,
+.about-us-form textarea {
+    outline: none !important;
+}

@@ -1,15 +1,23 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DCW</title>
-</head>
-<body>
+<?php
 
-    <h3>Public</h3>
 
-</body>
-</html>
+if (!isset($_GET['page'])) {
+    require_once './public/index.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'index' || $_GET['page'] == 'home') {
+    require_once './public/index.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'about-us') {
+    require_once './public/about-us.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'team') {
+    require_once './public/team.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'testimonial') {
+    require_once './public/testimonial.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'services') {
+    require_once './public/services.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'portfolio') {
+    require_once './public/portfolio.php';
+} else if (isset($_GET['page']) && $_GET['page'] == 'contact') {
+    require_once './public/contact.php';
+} else {
+    require_once './public/not-found.php';
+}
+

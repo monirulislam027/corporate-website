@@ -6,11 +6,14 @@ require_once '../../vendor/autoload.php';
 
 use App\Classes\Sliders;
 use App\Classes\Works;
+use App\Classes\AdminExtras;
 
 $sliders = new Sliders();
 $works = new Works();
+$adminExtras = new AdminExtras();
 
-$data = ['error' => false];
+$data = ['error' => false , 'r_url_con' => false ];
+
 
 
 if (isset($_POST['action']) && $_POST['action'] == 'save-slider') {
@@ -152,7 +155,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-slider') {
 
         }
 
-        echo json_encode($data);
+//        echo json_encode($data);
 
 //        images upload
 
@@ -418,7 +421,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-work-item') {
             $menu_id = $_POST['menu_id'];
             $status = $_POST['status'];
 
-            if ($_FILES['image']['name']){
+            if ($_FILES['image']['name']) {
                 $image = $_FILES['image'];
 
                 $imageName = $image['name'];
@@ -428,13 +431,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-work-item') {
 
                 $imageNameToStore = uniqid() . rand(111111, 999999) . '.' . $imageExe;
 
-            }else{
+            } else {
                 $imageNameToStore = $item_row['image'];
             }
 
-            $update = $works->update_work_item($title, $menu_id, $status, $imageNameToStore , $id);
+            $update = $works->update_work_item($title, $menu_id, $status, $imageNameToStore, $id);
             if ($update) {
-                if ($_FILES['image']['name']){
+                if ($_FILES['image']['name']) {
                     unlink('../../uploads/works/' . $item_row['image']);
                     move_uploaded_file($image['tmp_name'], '../../uploads/works/' . $imageNameToStore);
                 }
@@ -471,4 +474,46 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-work-item') {
     echo json_encode($data);
 
 
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'save-about-us') {
+
+    if (isset($_POST['title']) && isset($_POST['sub_title']) && isset($_POST['description'])) {
+
+        $title = $_POST['title'];
+        $sub_title = $_POST['sub_title'];
+        $description = $_POST['description'];
+
+        $result = $adminExtras->about_us_save($title , $sub_title , $description);
+
+        if ($result) {
+            $data['message'] = 'About Info Save Success';
+
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'About Info save failed';
+        }
+
+
+    } else {
+        $data['error'] = true;
+
+
+        $title = $_POST['title'];
+        $sub_title = $_POST['sub_title'];
+        $description = $_POST['description'];
+
+        if ($title == '') {
+            $data['message'] = $sliders->slider_error_message('title');
+        } elseif ($sub_title == '') {
+            $data['message'] = $sliders->slider_error_message('sub title');
+        } elseif ($description == '') {
+            $data['message'] = $sliders->slider_error_message('description');
+        }else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+    echo json_encode($data);
 }

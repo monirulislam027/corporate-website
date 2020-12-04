@@ -52,6 +52,14 @@ $auth->isLogedIn() ? false : header('location:login.php');
                     <a class="nav-link" href="sliders.php"><i class="fa fa-sliders-h "></i> Slider</a>
                 </li>
 
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'about_us.php') ? 'active' : '' ?>">
+                    <a class="nav-link" href="about_us.php"><i class="fa fa-info-circle "></i> About</a>
+                </li>
+
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'team_members.php') ? 'active' : '' ?>">
+                    <a class="nav-link" href="team_members.php"><i class="fa fa-users "></i> Team</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

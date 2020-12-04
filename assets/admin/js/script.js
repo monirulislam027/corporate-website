@@ -13,7 +13,7 @@ $(document).ready(function () {
     $('#datatable').dataTable();
     // date picker
     $('.datepicker').datepicker({
-        format: "dd M yyyy",
+        format: "dd-mm-yyyy",
         autoclose: true,
         todayHighlight: true
     });
@@ -118,8 +118,7 @@ $(document).ready(function () {
                                 response.message,
                                 'success'
                             )
-                            console.log('.remove-row-' + id);
-                            $('#remove-row-' + id ).remove();
+                            $('#remove-row-' + id).remove();
                         } else {
 
                             Swal.fire(
@@ -261,9 +260,68 @@ $(document).ready(function () {
 
     });
 
+    // create form
+    $('#text-form').on('submit', function (event) {
+
+
+        if ($('#text-form')[0].checkValidity()) {
+
+            event.preventDefault();
+
+
+            let action = $(this).data('url');
+
+            // $('.loader').show();
+            $.ajax({
+                url: 'http://dcw.test/admin/inc/action.php',
+                method: 'post',
+                data: $('#text-form').serialize() + '&action=' + action,
+                success: function (response) {
+                    $('.loader').hide();
+                    if (!response.error) {
+                        if (response.r_url_con) {
+
+                            Swal.fire({
+                                title: 'Successful!',
+                                text: response.message,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Go Back'
+                            }).then((result) => {
+
+                                if (result.isConfirmed) {
+                                    window.location = response.r_url;
+                                }
+
+                            });
+
+                        }else {
+                            Swal.fire(
+                                'Successful!',
+                                response.message,
+                                'success'
+                            )
+                        }
+                    } else {
+                        Swal.fire(
+                            'Failed!',
+                            response.message,
+                            'warning'
+                        )
+                    }
+
+                }
+            });
+
+
+        }
+    });
+
 
 //    jquery end
-});
+})
+;
 
 // image preview
 
