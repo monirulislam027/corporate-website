@@ -227,31 +227,41 @@ $(document).ready(function () {
                 success: function (response) {
                     $('.loader').hide();
                     if (!response.error) {
+                        if (response.r_url_con) {
 
-                        Swal.fire({
-                            title: 'Successful!',
-                            text: response.message,
-                            icon: 'success',
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            confirmButtonText: 'Go Back'
-                        }).then((result) => {
+                            Swal.fire({
+                                title: 'Successful!',
+                                text: response.message,
+                                icon: 'success',
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Go Back'
+                            }).then((result) => {
 
-                            if (result.isConfirmed) {
-                                window.location = response.r_url;
-                            }
+                                if (result.isConfirmed) {
+                                    window.location = response.r_url;
+                                }
+                            });
 
-                        });
-
-
+                        } else {
+                            Swal.fire(
+                                'Successful!',
+                                response.message,
+                                'success'
+                            )
+                        }
                     } else {
-                        toastr.error(response.message)
+                        Swal.fire(
+                            'Failed!',
+                            response.message,
+                            'warning'
+                        )
                     }
 
                 },
                 error: function (response) {
                     $('.loader').hide();
-                    console.log('error');
+                    console.log(response);
                 }
             });
 
@@ -271,7 +281,7 @@ $(document).ready(function () {
 
             let action = $(this).data('url');
 
-            // $('.loader').show();
+            $('.loader').show();
             $.ajax({
                 url: 'http://dcw.test/admin/inc/action.php',
                 method: 'post',
@@ -296,7 +306,7 @@ $(document).ready(function () {
 
                             });
 
-                        }else {
+                        } else {
                             Swal.fire(
                                 'Successful!',
                                 response.message,

@@ -7,13 +7,14 @@ require_once '../../vendor/autoload.php';
 use App\Classes\Sliders;
 use App\Classes\Works;
 use App\Classes\AdminExtras;
+use App\Classes\Team;
 
 $sliders = new Sliders();
 $works = new Works();
 $adminExtras = new AdminExtras();
+$team = new Team();
 
-$data = ['error' => false , 'r_url_con' => false ];
-
+$data = ['error' => false, 'r_url_con' => false];
 
 
 if (isset($_POST['action']) && $_POST['action'] == 'save-slider') {
@@ -485,7 +486,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'save-about-us') {
         $sub_title = $_POST['sub_title'];
         $description = $_POST['description'];
 
-        $result = $adminExtras->about_us_save($title , $sub_title , $description);
+        $result = $adminExtras->about_us_save($title, $sub_title, $description);
 
         if ($result) {
             $data['message'] = 'About Info Save Success';
@@ -510,10 +511,200 @@ if (isset($_POST['action']) && $_POST['action'] == 'save-about-us') {
             $data['message'] = $sliders->slider_error_message('sub title');
         } elseif ($description == '') {
             $data['message'] = $sliders->slider_error_message('description');
-        }else {
+        } else {
             $data['message'] = 'Something Went Wrong!';
         }
     }
 
     echo json_encode($data);
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-team-member') {
+
+    if (isset($_POST['name']) && isset($_POST['role']) && isset($_POST['short_desc']) && $_FILES['image']['name']) {
+
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $short_desc = $_POST['short_desc'];
+        $status = $_POST['status'];
+
+        $facebook = $_POST['facebook'];
+        $twitter = $_POST['twitter'];
+        $instagram = $_POST['instagram'];
+        $linkedIn = $_POST['linkedIn'];
+
+//        images upload
+        $image = $_FILES['image'];
+
+        $imageName = $image['name'];
+        /** @var  $imageExe */
+        $imageExe = explode('.', $imageName);
+        $imageExe = end($imageExe);
+
+        $imageNameToStore = uniqid() . rand(111111, 999999) . '.' . $imageExe;
+
+        $result = $team->add_member($name, $role, $short_desc, $status, $facebook, $twitter, $instagram, $linkedIn, $imageNameToStore);
+        if ($result) {
+            move_uploaded_file($image['tmp_name'], '../../uploads/team/' . $imageNameToStore);
+            $data['message'] = 'Member add Success';
+            $data['r_url_con'] = true;
+            $data['r_url'] = 'team_members.php';
+
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'Member add failed';
+        }
+    } else {
+
+        $data['error'] = true;
+
+
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $short_desc = $_POST['short_desc'];
+
+        if ($name == '') {
+            $data['message'] = $team->error_message('title');
+        } elseif (empty($_FILES['image']['name'])) {
+            $data['message'] = 'Please select a image!';
+        } elseif ($role == '') {
+            $data['message'] = $team->error_message('status');
+        } elseif ($short_desc == '') {
+            $data['message'] = $team->error_message('description');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+    echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'team-member-status-change') {
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+
+    $status_update = $team->team_status_update($id, $status);
+
+    if ($status_update) {
+        $data['message'] = 'Status updated successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Status updated failed!';
+    }
+    echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'team-member-delete') {
+
+    $id = (int)($_POST['id']);
+    $member = $team->team_member_find($id);
+
+    if ($member->num_rows > 0) {
+
+        $delete = $team->member_delete($id);
+
+        if ($delete) {
+
+            $member_row = $member->fetch_assoc();
+
+            unlink('../../uploads/team/' . $member_row['image']);
+
+            $data['message'] = 'Team member deleted successfully!';
+
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'Team member deleted failed!';
+        }
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Team member not found!';
+    }
+
+
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'update-team-member') {
+
+    if (isset($_POST['name']) && isset($_POST['role']) && isset($_POST['short_desc'])) {
+
+        $id = $_POST['data_id'];
+        $id = base64_decode($id);
+        $id = (int)$id;
+
+        $member_array = $team->team_member_find($id);
+
+        if ($member_array->num_rows > 0) {
+
+            $member_row = $member_array->fetch_assoc();
+           
+            $name = $_POST['name'];
+            $role = $_POST['role'];
+            $short_desc = $_POST['short_desc'];
+            $status = $_POST['status'];
+
+            $facebook = $_POST['facebook'];
+            $twitter = $_POST['twitter'];
+            $instagram = $_POST['instagram'];
+            $linkedIn = $_POST['linkedIn'];
+
+            if ($_FILES['image']['name']) {
+                $image = $_FILES['image'];
+
+                $imageName = $image['name'];
+                /** @var  $imageExe */
+                $imageExe = explode('.', $imageName);
+                $imageExe = end($imageExe);
+
+                $imageNameToStore = uniqid() . rand(111111, 999999) . '.' . $imageExe;
+
+            } else {
+                $imageNameToStore = $member_row['image'];
+            }
+
+            $update = $team->update_member($name, $role, $short_desc, $status, $facebook, $twitter, $instagram, $linkedIn, $imageNameToStore, $id);
+            if ($update) {
+                if ($_FILES['image']['name']) {
+                    unlink('../../uploads/team/' . $member_row['image']);
+                    move_uploaded_file($image['tmp_name'], '../../uploads/team/' . $imageNameToStore);
+                }
+                $data['message'] = 'Member info save Success';
+                $data['r_url_con'] = true;
+                $data['r_url'] = 'team_members.php';
+
+            } else {
+                $data['error'] = true;
+                $data['message'] = 'Member info save failed';
+            }
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'Member Not found!';
+        }
+    } else {
+
+        $data['error'] = true;
+
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $short_desc = $_POST['short_desc'];
+
+        if ($name == '') {
+            $data['message'] = $team->error_message('title');
+        } elseif ($role == '') {
+            $data['message'] = $team->error_message('role');
+        } elseif ($short_desc == '') {
+            $data['message'] = $team->error_message('description');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+    echo json_encode($data);
+
+
 }

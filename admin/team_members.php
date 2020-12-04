@@ -1,10 +1,10 @@
 <?php
 require_once 'inc/header.php';
 
-use App\Classes\Works;
-$works = new Works();
+use App\Classes\Team;
 
-$works_item = $works->work_items();
+$team = new Team();
+$team_members = $team->team_members();
 
 ?>
 
@@ -29,7 +29,7 @@ $works_item = $works->work_items();
             <th>Name</th>
             <th>Role</th>
             <th>Details</th>
-            <th>Socials</th>
+
             <th>Image</th>
             <th>Status</th>
             <th>Action</th>
@@ -38,7 +38,33 @@ $works_item = $works->work_items();
 
         <tbody>
 
+        <?php
+        $sr = 1;
+        while ($member = $team_members->fetch_assoc()) { ?>
 
+            <tr id="remove-row-<?= ($member['id']) ?>">
+                <td><?= $sr ?></td>
+                <td><?= $member['name'] ?></td>
+                <td><?= $member['role'] ?></td>
+                <td><?= $member['short_desc'] ?></td>
+                <td><img class=" image-preview" src="<?= $team->base_url . 'uploads/team/' . $member['image'] ?>"
+                         alt="<?= $member['name'] ?>"></td>
+                <td><input type="checkbox" class="toggle-button" data-id="<?= $member['id'] ?>"
+                           data-action="team-member-status-change"
+                           data-onstyle="primary" data-offstyle="danger" data-toggle="toggle" data-on="Active"
+                           data-off="Inactive" <?= $member['status'] == 1 ? 'checked' : '' ?> ></td>
+                <td class="action-bars">
+
+                    <a href="team_member_edit.php?action=edit-team-member&data=<?= base64_encode($member['id']) ?>"
+                       class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                    <button data-url-id="<?= ($member['id']) ?>" type="button" data-action="team-member-delete"
+                            class="btn btn-danger btn-sm remove_item"><i class="fa fa-trash-alt"></i></button>
+
+                </td>
+
+            </tr>
+
+        <?php $sr++; } ?>
 
 
         </tbody>
