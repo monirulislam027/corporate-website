@@ -10,6 +10,7 @@ use App\Classes\AdminExtras;
 use App\Classes\Team;
 use App\Classes\Service;
 use App\Classes\Testimonials;
+use App\Classes\Skills;
 
 $sliders = new Sliders();
 $works = new Works();
@@ -17,6 +18,8 @@ $adminExtras = new AdminExtras();
 $team = new Team();
 $service = new Service();
 $testimonial = new Testimonials();
+$skills = new Skills();
+
 
 $data = ['error' => false, 'r_url_con' => false];
 
@@ -993,7 +996,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-testimonial') {
 
 //        images upload
 
-            $result = $testimonial->edit_testimonial($name, $role, $review, $status, $imageNameToStore , $id);
+            $result = $testimonial->edit_testimonial($name, $role, $review, $status, $imageNameToStore, $id);
             if ($result) {
                 if ($_FILES['image']['name']) {
 
@@ -1030,6 +1033,127 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-testimonial') {
                 $data['message'] = 'Something Went Wrong!';
             }
         }
+    }
+
+    echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-skill') {
+
+    if (isset($_POST['name']) && $_POST['name'] != '' && isset($_POST['percentage']) && $_POST['percentage'] != '' && isset($_POST['status'])) {
+
+        $name = $_POST['name'];
+        $percentage = $_POST['percentage'];
+        $status = $_POST['status'];
+
+        $add_skill = $skills->add_skill($name, $percentage, $status);
+
+        if ($add_skill) {
+            $data['message'] = 'skill added successfully!';
+            $data['r_url_con'] = true;
+            $data['r_url'] = 'skills.php';
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'skill added failed!';
+        }
+    } else {
+
+        $data['error'] = true;
+
+        $name = $_POST['name'];
+        $percentage = $_POST['percentage'];
+        $status = $_POST['status'];
+
+        if ($name == '') {
+            $data['message'] = $team->error_message('name');
+        } elseif ($percentage == '') {
+            $data['message'] = $team->error_message('percentage');
+        } elseif ($status == '') {
+            $data['message'] = $team->error_message('status');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+
+    echo json_encode($data);
+
+}
+// work menu status update
+if (isset($_POST['action']) && $_POST['action'] == 'skill-status') {
+
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+
+    $status_update = $skills->skill_status_change($id, $status);
+
+    if ($status_update) {
+        $data['message'] = 'Status updated successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Status updated failed!';
+    }
+    echo json_encode($data);
+
+}
+// work menu update
+if (isset($_POST['action']) && $_POST['action'] == 'update-skill') {
+
+
+    if (isset($_POST['name']) && $_POST['name'] != '' && isset($_POST['percentage']) && $_POST['percentage'] != '' && isset($_POST['status'])) {
+
+        $name = $_POST['name'];
+        $percentage = $_POST['percentage'];
+        $status = $_POST['status'];
+        $id = base64_decode($_POST['data_id']);
+        $id = (int)$id;
+
+        $update_skill = $skills->update_skill($name , $percentage , $status , $id);
+
+        if ($update_skill) {
+            $data['message'] = 'Skill updated successfully!';
+            $data['r_url_con'] = true;
+            $data['r_url'] = 'skills.php';
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'Skill update failed!';
+        }
+    } else {
+
+        $data['error'] = true;
+
+        $name = $_POST['name'];
+        $percentage = $_POST['percentage'];
+        $status = $_POST['status'];
+
+        if ($name == '') {
+            $data['message'] = $team->error_message('name');
+        } elseif ($percentage == '') {
+            $data['message'] = $team->error_message('percentage');
+        } elseif ($status == '') {
+            $data['message'] = $team->error_message('status');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+
+    echo json_encode($data);
+}
+if (isset($_POST['action']) && $_POST['action'] == 'skill-delete') {
+
+    $id = (int)$_POST['id'];
+
+    $delete = $skills->skill_delete($id);
+
+    if ($delete) {
+        $data['message'] = 'Skill deleted successfully!';
+
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Skill deleted failed!';
     }
 
     echo json_encode($data);

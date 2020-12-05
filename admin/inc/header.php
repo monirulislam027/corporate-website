@@ -68,6 +68,10 @@ $auth->isLogedIn() ? false : header('location:login.php');
                     <a class="nav-link" href="testimonials.php"><i class="fas fa-assistive-listening-systems"></i> Testimonials </a>
                 </li>
 
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'skills.php') ||  (basename($_SERVER['PHP_SELF']) === 'skill_add.php') ||  (basename($_SERVER['PHP_SELF']) === 'skill_edit.php') ? 'active' : '' ?>">
+                    <a class="nav-link" href="skills.php"><i class="fas fa-ribbon"></i> Skills </a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
