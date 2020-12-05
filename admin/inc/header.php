@@ -64,8 +64,8 @@ $auth->isLogedIn() ? false : header('location:login.php');
                     <a class="nav-link" href="service.php"><i class="fas fa-assistive-listening-systems"></i> Services </a>
                 </li>
 
-                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'service.php') ||  (basename($_SERVER['PHP_SELF']) === 'service_add.php') ||  (basename($_SERVER['PHP_SELF']) === 'service_edit.php') ? 'active' : '' ?>">
-                    <a class="nav-link" href="service.php"><i class="fas fa-assistive-listening-systems"></i> Testimonials </a>
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'testimonials.php') ||  (basename($_SERVER['PHP_SELF']) === 'testimonials_add.php') ||  (basename($_SERVER['PHP_SELF']) === 'testimonials_edit.php') ? 'active' : '' ?>">
+                    <a class="nav-link" href="testimonials.php"><i class="fas fa-assistive-listening-systems"></i> Testimonials </a>
                 </li>
 
                 <li class="nav-item dropdown">

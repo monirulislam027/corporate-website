@@ -9,12 +9,14 @@ use App\Classes\Works;
 use App\Classes\AdminExtras;
 use App\Classes\Team;
 use App\Classes\Service;
+use App\Classes\Testimonials;
 
 $sliders = new Sliders();
 $works = new Works();
 $adminExtras = new AdminExtras();
 $team = new Team();
 $service = new Service();
+$testimonial = new Testimonials();
 
 $data = ['error' => false, 'r_url_con' => false];
 
@@ -196,8 +198,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-slider') {
 
 
 }
-
-
 // slider update
 if (isset($_POST['action']) && $_POST['action'] == 'slider-status-change') {
     $id = $_POST['id'];
@@ -214,6 +214,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'slider-status-change') {
     echo json_encode($data);
 
 }
+
 
 if (isset($_POST['action']) && $_POST['action'] == 'add-work-menu') {
 
@@ -239,7 +240,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'add-work-menu') {
     echo json_encode($data);
 
 }
-
 // work menu status update
 if (isset($_POST['action']) && $_POST['action'] == 'works-menu-status') {
     $id = $_POST['id'];
@@ -256,7 +256,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'works-menu-status') {
     echo json_encode($data);
 
 }
-
 // work menu update
 if (isset($_POST['action']) && $_POST['action'] == 'update-work-menu') {
 
@@ -304,6 +303,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'works-menu-delete') {
     echo json_encode($data);
 
 }
+
 
 if (isset($_POST['action']) && $_POST['action'] == 'add-work-item') {
 
@@ -356,7 +356,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'add-work-item') {
 
 }
 
-
 if (isset($_POST['action']) && $_POST['action'] == 'works-item-status-change') {
 
     $id = $_POST['id'];
@@ -373,7 +372,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'works-item-status-change') {
     echo json_encode($data);
 
 }
-
 
 if (isset($_POST['action']) && $_POST['action'] == 'works-item-remove') {
 
@@ -583,7 +581,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'add-team-member') {
 
 }
 
-
 if (isset($_POST['action']) && $_POST['action'] == 'team-member-status-change') {
     $id = $_POST['id'];
     $status = $_POST['status'];
@@ -599,7 +596,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'team-member-status-change') 
     echo json_encode($data);
 
 }
-
 
 if (isset($_POST['action']) && $_POST['action'] == 'team-member-delete') {
 
@@ -711,6 +707,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-team-member') {
 
 }
 
+
 if (isset($_POST['action']) && $_POST['action'] == 'add-service') {
 
     if (isset($_POST['title']) && isset($_POST['sub_title']) && isset($_POST['icon'])) {
@@ -774,7 +771,6 @@ if (isset($_POST['action']) && $_POST['action'] == 'service-status-change') {
 
 }
 
-
 if (isset($_POST['action']) && $_POST['action'] == 'service-delete') {
 
 
@@ -816,7 +812,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-service') {
         $icon = $_POST['icon'];
         $status = $_POST['status'];
 
-        $result = $service->update_service($title, $sub_title, $icon, $status , $id);
+        $result = $service->update_service($title, $sub_title, $icon, $status, $id);
 
         if ($result) {
 
@@ -845,10 +841,194 @@ if (isset($_POST['action']) && $_POST['action'] == 'edit-service') {
             $data['message'] = $team->error_message('sub title');
         } elseif ($icon == '') {
             $data['message'] = $team->error_message('icon');
-        }elseif ($id == '') {
+        } elseif ($id == '') {
             $data['message'] = $team->error_message('id');
         } else {
             $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+    echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-testimonial') {
+
+    if (isset($_POST['name']) && isset($_POST['role']) && isset($_POST['review']) && $_FILES['image']['name']) {
+
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $review = $_POST['review'];
+        $status = $_POST['status'];
+
+
+//        images upload
+        $image = $_FILES['image'];
+
+        $imageName = $image['name'];
+        /** @var  $imageExe */
+        $imageExe = explode('.', $imageName);
+        $imageExe = end($imageExe);
+
+        $imageNameToStore = uniqid() . rand(111111, 999999) . '.' . $imageExe;
+
+        $result = $testimonial->add_testimonial($name, $role, $review, $status, $imageNameToStore);
+        if ($result) {
+            move_uploaded_file($image['tmp_name'], '../../uploads/testimonials/' . $imageNameToStore);
+            $data['message'] = 'Testimonial add Success';
+            $data['r_url_con'] = true;
+            $data['r_url'] = 'testimonials.php';
+
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'Testimonial add failed';
+        }
+    } else {
+
+        $data['error'] = true;
+
+
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $review = $_POST['review'];
+
+        if ($name == '') {
+            $data['message'] = $team->error_message('title');
+        } elseif (empty($_FILES['image']['name'])) {
+            $data['message'] = 'Please select a image!';
+        } elseif ($role == '') {
+            $data['message'] = $team->error_message('role');
+        } elseif ($review == '') {
+            $data['message'] = $team->error_message('review');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'testimonials-status-change') {
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+
+    $status_update = $testimonial->testimonials_status_update($id, $status);
+
+    if ($status_update) {
+        $data['message'] = 'Status updated successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Status updated failed!';
+    }
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'testimonial-delete') {
+
+    $id = (int)($_POST['id']);
+
+    $testimonial_array = $testimonial->testimonial_find($id);
+
+    if ($testimonial_array->num_rows > 0) {
+
+        $delete = $testimonial->testimonial_delete($id);
+
+        if ($delete) {
+
+            $testimonial_row = $testimonial_array->fetch_assoc();
+
+            unlink('../../uploads/testimonials/' . $testimonial_row['image']);
+
+            $data['message'] = 'Testimonial deleted successfully!';
+
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'Testimonial deleted failed!';
+        }
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Testimonial not found!';
+    }
+
+
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'edit-testimonial') {
+
+    if (isset($_POST['name']) && isset($_POST['role']) && isset($_POST['review'])) {
+
+        $name = $_POST['name'];
+        $role = $_POST['role'];
+        $review = $_POST['review'];
+        $status = $_POST['status'];
+
+        $id = base64_decode($_POST['data_id']);
+        $id = (int)$id;
+
+
+        $testimonial_array = $testimonial->testimonial_find($id);
+
+        if ($testimonial_array->num_rows > 0) {
+
+            $testimonial_row = $testimonial_array->fetch_assoc();
+
+            if ($_FILES['image']['name']) {
+                $image = $_FILES['image'];
+
+                $imageName = $image['name'];
+                /** @var  $imageExe */
+                $imageExe = explode('.', $imageName);
+                $imageExe = end($imageExe);
+
+                $imageNameToStore = uniqid() . rand(111111, 999999) . '.' . $imageExe;
+
+            } else {
+                $imageNameToStore = $testimonial_row['image'];
+            }
+
+//        images upload
+
+            $result = $testimonial->edit_testimonial($name, $role, $review, $status, $imageNameToStore , $id);
+            if ($result) {
+                if ($_FILES['image']['name']) {
+
+                    unlink('../../uploads/testimonials/' . $testimonial_row['image']);
+                    move_uploaded_file($image['tmp_name'], '../../uploads/testimonials/' . $imageNameToStore);
+                }
+
+                $data['message'] = 'Testimonial add Success';
+                $data['r_url_con'] = true;
+                $data['r_url'] = 'testimonials.php';
+
+            } else {
+                $data['error'] = true;
+                $data['message'] = 'Testimonial add failed';
+            }
+        } else {
+
+            $data['error'] = true;
+
+
+            $name = $_POST['name'];
+            $role = $_POST['role'];
+            $review = $_POST['review'];
+
+            if ($name == '') {
+                $data['message'] = $team->error_message('title');
+            } elseif (empty($_FILES['image']['name'])) {
+                $data['message'] = 'Please select a image!';
+            } elseif ($role == '') {
+                $data['message'] = $team->error_message('role');
+            } elseif ($review == '') {
+                $data['message'] = $team->error_message('review');
+            } else {
+                $data['message'] = 'Something Went Wrong!';
+            }
         }
     }
 
