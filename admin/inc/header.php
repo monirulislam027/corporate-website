@@ -56,8 +56,16 @@ $auth->isLogedIn() ? false : header('location:login.php');
                     <a class="nav-link" href="about_us.php"><i class="fa fa-info-circle "></i> About</a>
                 </li>
 
-                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'team_members.php') ? 'active' : '' ?>">
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'team_members.php')  || (basename($_SERVER['PHP_SELF']) === 'team_member_add.php')  || (basename($_SERVER['PHP_SELF']) === 'team_member_edit.php') ? 'active' : '' ?>">
                     <a class="nav-link" href="team_members.php"><i class="fa fa-users "></i> Team</a>
+                </li>
+
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'service.php') ||  (basename($_SERVER['PHP_SELF']) === 'service_add.php') ||  (basename($_SERVER['PHP_SELF']) === 'service_edit.php') ? 'active' : '' ?>">
+                    <a class="nav-link" href="service.php"><i class="fas fa-assistive-listening-systems"></i> Services </a>
+                </li>
+
+                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'service.php') ||  (basename($_SERVER['PHP_SELF']) === 'service_add.php') ||  (basename($_SERVER['PHP_SELF']) === 'service_edit.php') ? 'active' : '' ?>">
+                    <a class="nav-link" href="service.php"><i class="fas fa-assistive-listening-systems"></i> Testimonials </a>
                 </li>
 
                 <li class="nav-item dropdown">

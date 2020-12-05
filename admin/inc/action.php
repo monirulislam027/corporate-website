@@ -8,11 +8,13 @@ use App\Classes\Sliders;
 use App\Classes\Works;
 use App\Classes\AdminExtras;
 use App\Classes\Team;
+use App\Classes\Service;
 
 $sliders = new Sliders();
 $works = new Works();
 $adminExtras = new AdminExtras();
 $team = new Team();
+$service = new Service();
 
 $data = ['error' => false, 'r_url_con' => false];
 
@@ -643,7 +645,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-team-member') {
         if ($member_array->num_rows > 0) {
 
             $member_row = $member_array->fetch_assoc();
-           
+
             $name = $_POST['name'];
             $role = $_POST['role'];
             $short_desc = $_POST['short_desc'];
@@ -706,5 +708,150 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-team-member') {
     }
     echo json_encode($data);
 
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'add-service') {
+
+    if (isset($_POST['title']) && isset($_POST['sub_title']) && isset($_POST['icon'])) {
+
+        $title = $_POST['title'];
+        $sub_title = $_POST['sub_title'];
+        $icon = $_POST['icon'];
+        $status = $_POST['status'];
+
+        $result = $service->add_service($title, $sub_title, $icon, $status);
+
+        if ($result) {
+
+            $data['message'] = 'Service add Success';
+            $data['r_url_con'] = true;
+            $data['r_url'] = 'service.php';
+
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'Service add failed';
+        }
+
+
+    } else {
+
+        $data['error'] = true;
+
+        $title = $_POST['title'];
+        $sub_title = $_POST['sub_title'];
+        $icon = $_POST['icon'];
+
+        if ($title == '') {
+            $data['message'] = $team->error_message('title');
+        } elseif ($sub_title == '') {
+            $data['message'] = $team->error_message('sub title');
+        } elseif ($icon == '') {
+            $data['message'] = $team->error_message('icon');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'service-status-change') {
+
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+
+    $status_update = $service->service_status_update($id, $status);
+
+    if ($status_update) {
+        $data['message'] = 'Status updated successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Status updated failed!';
+    }
+    echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'service-delete') {
+
+
+    $id = (int)($_POST['id']);
+    $service_ob = $service->service_find($id);
+
+    if ($service_ob->num_rows > 0) {
+
+        $delete = $service->service_delete($id);
+
+        if ($delete) {
+            $data['message'] = 'Service deleted successfully!';
+
+        } else {
+            $data['error'] = 'true';
+            $data['message'] = 'Service deleted failed!';
+        }
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Service not found!';
+    }
+
+
+    echo json_encode($data);
+
+}
+
+if (isset($_POST['action']) && $_POST['action'] == 'edit-service') {
+
+
+    if (isset($_POST['title']) && isset($_POST['sub_title']) && isset($_POST['icon']) && isset($_POST['data_id'])) {
+
+        $id = $_POST['data_id'];
+        $id = base64_decode($id);
+        $id = (int)$id;
+
+        $title = $_POST['title'];
+        $sub_title = $_POST['sub_title'];
+        $icon = $_POST['icon'];
+        $status = $_POST['status'];
+
+        $result = $service->update_service($title, $sub_title, $icon, $status , $id);
+
+        if ($result) {
+
+            $data['message'] = 'Service update Success';
+            $data['r_url_con'] = true;
+            $data['r_url'] = 'service.php';
+
+        } else {
+            $data['error'] = true;
+            $data['message'] = 'Service update failed';
+        }
+
+
+    } else {
+
+        $data['error'] = true;
+
+        $title = $_POST['title'];
+        $sub_title = $_POST['sub_title'];
+        $icon = $_POST['icon'];
+        $id = $_POST['data_id'];
+
+        if ($title == '') {
+            $data['message'] = $team->error_message('title');
+        } elseif ($sub_title == '') {
+            $data['message'] = $team->error_message('sub title');
+        } elseif ($icon == '') {
+            $data['message'] = $team->error_message('icon');
+        }elseif ($id == '') {
+            $data['message'] = $team->error_message('id');
+        } else {
+            $data['message'] = 'Something Went Wrong!';
+        }
+    }
+
+    echo json_encode($data);
 
 }

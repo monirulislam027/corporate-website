@@ -109,7 +109,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: 'http://dcw.test/admin/inc/action.php',
                     method: 'post',
-                    data: {'id': id, action: action},
+                    data: {id: id, action: action},
                     success: function (response) {
                         $('.loader').hide();
                         if (!response.error) {
@@ -150,7 +150,9 @@ $(document).ready(function () {
             data: {id: id, status: status, action: action},
             success: function (response) {
                 $('.loader').hide();
-
+            } ,
+            error: function (response) {
+                console.log('error')
             }
         });
 
@@ -208,7 +210,6 @@ $(document).ready(function () {
      */
     // create form
     $('#image-form').on('submit', function (event) {
-
 
         if ($('#image-form')[0].checkValidity()) {
 
@@ -273,11 +274,9 @@ $(document).ready(function () {
     // create form
     $('#text-form').on('submit', function (event) {
 
-
         if ($('#text-form')[0].checkValidity()) {
 
             event.preventDefault();
-
 
             let action = $(this).data('url');
 
@@ -289,6 +288,7 @@ $(document).ready(function () {
                 success: function (response) {
                     $('.loader').hide();
                     if (!response.error) {
+
                         if (response.r_url_con) {
 
                             Swal.fire({
