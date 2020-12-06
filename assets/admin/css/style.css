@@ -56,3 +56,14 @@
 .about-us-form textarea {
     outline: none !important;
 }
+
+#option-table input ,
+#option-table textarea{
+    outline: none !important;
+}
+
+.outline-none,
+.wraper-all-outline-none input{
+    outline: none !important;
+}
+

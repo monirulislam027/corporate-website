@@ -72,4 +72,9 @@ class SiteExtras extends Config
 
     }
 
+    public function contact_us()
+    {
+        return $this->conn->query("SELECT * FROM `contact` WHERE `id` = 1");
+    }
+
 }

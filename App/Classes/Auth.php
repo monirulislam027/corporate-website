@@ -7,6 +7,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+use App\Classes\Option;
+
 class Auth extends Config
 {
     public function register($name , $email , $password)

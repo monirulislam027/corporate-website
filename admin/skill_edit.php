@@ -19,9 +19,6 @@ if (!$skill->num_rows > 0) {
 
 $skill = $skill->fetch_assoc();
 
-
-
-
 ?>
 <div class="row justify-content-between">
 

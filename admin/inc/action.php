@@ -11,6 +11,7 @@ use App\Classes\Team;
 use App\Classes\Service;
 use App\Classes\Testimonials;
 use App\Classes\Skills;
+use App\Classes\Option;
 
 $sliders = new Sliders();
 $works = new Works();
@@ -19,6 +20,7 @@ $team = new Team();
 $service = new Service();
 $testimonial = new Testimonials();
 $skills = new Skills();
+$options = new Option();
 
 
 $data = ['error' => false, 'r_url_con' => false];
@@ -1110,7 +1112,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-skill') {
         $id = base64_decode($_POST['data_id']);
         $id = (int)$id;
 
-        $update_skill = $skills->update_skill($name , $percentage , $status , $id);
+        $update_skill = $skills->update_skill($name, $percentage, $status, $id);
 
         if ($update_skill) {
             $data['message'] = 'Skill updated successfully!';
@@ -1142,6 +1144,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'update-skill') {
 
     echo json_encode($data);
 }
+
 if (isset($_POST['action']) && $_POST['action'] == 'skill-delete') {
 
     $id = (int)$_POST['id'];
@@ -1159,3 +1162,27 @@ if (isset($_POST['action']) && $_POST['action'] == 'skill-delete') {
     echo json_encode($data);
 
 }
+
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'option_text_update' || $_POST['action'] == 'option_data_status' ) {
+
+    if ($_POST['action'] == 'option_data_status'){
+        $value = $_POST['status'];
+    }else if ($_POST['action'] == 'option_text_update'){
+        $value = $_POST['value'];
+    }
+
+    $id = $_POST['id'];
+
+    $save = $options->option_update($value, $id);
+    if ($save) {
+        $data['message'] = 'Data Updated successfully!';
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Data Updated failed!';
+    }
+    echo json_encode($data);
+}
+
+

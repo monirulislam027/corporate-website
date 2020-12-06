@@ -43,10 +43,7 @@ $works_menus = $works->works_menu();
                 <td><?= $sr ?></td>
                 <td><?= $row2['name'] ?></td>
                 <td><?= $row2['slug'] ?></td>
-                <td><input type="checkbox" class="toggle-button" data-id="<?= $row2['id'] ?>"
-                           data-action="works-menu-status"
-                           data-onstyle="primary" data-offstyle="danger" data-toggle="toggle" data-on="Active"
-                           data-off="Inactive" <?= $row2['status'] == 1 ? 'checked' : '' ?> ></td>
+
                 <td class="action-bars">
 
                     <a href="work_menu_edit.php?action=edit-work-menu&data=<?= base64_encode($row2['id']) ?>"

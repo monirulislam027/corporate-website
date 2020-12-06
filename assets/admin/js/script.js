@@ -329,6 +329,23 @@ $(document).ready(function () {
     });
 
 
+    // option input data save
+    $('body').on('change', '.option-input-text', function () {
+
+        let value = $(this).val();
+        let action = $(this).data('url');
+        let id = $(this).data('id');
+
+        $.ajax({
+            url: 'http://dcw.test/admin/inc/action.php',
+            method: 'post',
+            data: {id: id, value: value , action: action}
+        });
+
+    });
+
+
+
 //    jquery end
 })
 ;
