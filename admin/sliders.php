@@ -40,7 +40,7 @@ $result = $slider->index();
         while ($row1 = $result->fetch_assoc()) {
 
             ?>
-            <tr class="remove-row-<?= ($row1['id']) ?>">
+            <tr id="remove-row-<?= ($row1['id']) ?>">
                 <td><?= $sr ?></td>
                 <td><?= $row1['title'] ?></td>
                 <td><?= $row1['sub_title'] ?></td>

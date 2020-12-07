@@ -1186,3 +1186,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'option_text_update' || $_POS
 }
 
 
+if (isset($_POST['action']) && $_POST['action'] == 'contact-message-delete') {
+
+    $id = (int)$_POST['id'];
+
+    $delete = $adminExtras->message_delete($id);
+
+    if ($delete) {
+        $data['message'] = 'Message deleted successfully!';
+
+    } else {
+        $data['error'] = 'true';
+        $data['message'] = 'Message deleted failed!';
+    }
+
+    echo json_encode($data);
+
+}
+

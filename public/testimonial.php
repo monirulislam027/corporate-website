@@ -37,7 +37,7 @@ $testimonials = $site->testimonials();
                     while ($testimonial = $testimonials->fetch_assoc()) {
                         ?>
 
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 my-2">
                             <div class="testimonial-item">
                                 <img src="uploads/testimonials/<?= $testimonial['image'] ?>" class="testimonial-img"
                                      alt="<?= $testimonial['name'] ?>">

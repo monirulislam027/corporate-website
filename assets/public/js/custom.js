@@ -36,3 +36,4 @@ loop1 = setInterval(function () {
         i++;
     }
 }, time);
+

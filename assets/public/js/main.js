@@ -171,4 +171,78 @@
     items: 1
   });
 
+
+
+//   custom js file for form
+  $(document).ready(function () {
+
+
+    // send message
+    $('#contact-form-submit').click(function (event) {
+
+      if ($('#contact-form')[0].checkValidity()) {
+
+        event.preventDefault();
+
+        if ($('#name').val() == '') {
+          $('#name').addClass('is-invalid');
+        } else {
+          $('#name').removeClass('is-invalid');
+        }
+
+        if ($('#subject').val() == '') {
+          $('#subject').addClass('is-invalid');
+        } else {
+          $('#subject').removeClass('is-invalid');
+        }
+
+        if ($('#email').val() == '') {
+          $('#email').addClass('is-invalid');
+        } else {
+          $('#email').removeClass('is-invalid');
+        }
+
+        if ($('#message').val() == '') {
+          $('#message').addClass('is-invalid');
+        } else {
+          $('#message').removeClass('is-invalid');
+        }
+
+        if ($('#name').val() != '' && $('#email').val() != '' && $('#subject').val() != '' && $('#message').val() != '') {
+
+          $('#contact-form-submit').html("Processing.....").attr('disabled' , true);
+
+          $.ajax({
+            url: 'http://dcw.test/public/component/action.php',
+            method: 'post',
+            data: $('#contact-form').serialize() + '&action=contact-message',
+            success: function (response) {
+              $('#contact-form-submit').html("Send Message").attr('disabled' , false);
+              if (!response.error) {
+                $('#contact-form')[0].reset();
+                Swal.fire(
+                    'Thank You!!',
+                    response.message,
+                    'success'
+                )
+
+              } else {
+                Swal.fire(
+                    'Failed!',
+                    response.message,
+                    'warning'
+                )
+              }
+
+            }
+          });
+
+
+        }
+      }
+    });
+
+
+  });
+
 })(jQuery);

@@ -79,11 +79,11 @@
 <script   src="assets/public/vendor/jquery/jquery.min.js"></script>
 <script   src="assets/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script   src="assets/public/vendor/jquery.easing/jquery.easing.min.js"></script>
-<script   src="assets/public/vendor/php-email-form/validate.js"></script>
 <script   src="assets/public/vendor/isotope-layout/isotope.pkgd.min.js"></script>
 <script   src="assets/public/vendor/venobox/venobox.min.js"></script>
 <script   src="assets/public/vendor/waypoints/jquery.waypoints.min.js"></script>
 <script   src="assets/public/vendor/owl.carousel/owl.carousel.min.js"></script>
+<script   src="assets/vendor/sweetalert/sweetalert2.min.js"></script>
 
 <!-- Template Main JS File -->
 <script   src="assets/public/js/main.js"></script>

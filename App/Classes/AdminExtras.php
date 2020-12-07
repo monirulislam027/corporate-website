@@ -22,6 +22,15 @@ class AdminExtras extends Config
     }
 
 
+    public function all_messages()
+    {
+        return $this->conn->query("SELECT * FROM `contact` ORDER BY `id` DESC ");
+    }
+
+    public function message_delete($id)
+    {
+        return $this->conn->query("Delete From `contact` WHERE `id` = '$id'");
+    }
 
 }
 

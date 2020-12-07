@@ -47,4 +47,10 @@ class Site extends Config
         return $this->conn->query("SELECT * FROM `services` WHERE `status` = 1 ");
     }
 
+    public function save_message($name, $email, $subject, $message)
+    {
+        return $this->conn->query("INSERT INTO `contact` (`name` , `email` , `subject` , `message`) VALUES ('$name' , '$email' , '$subject' , '$message')");
+
+    }
+
 }

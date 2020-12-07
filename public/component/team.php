@@ -9,7 +9,7 @@ $team = $site->team_members();
     if ($team->num_rows > 0) {
         while ($member = $team->fetch_assoc()) {
             ?>
-            <div class="col-lg-6">
+            <div class="col-lg-6 my-3">
                 <div class="member d-flex align-items-start">
                     <div class="pic"><img src="uploads/team/<?= $member['image'] ?>" class="img-fluid"
                                           alt="<?= $member['name'] ?>"></div>

@@ -37,6 +37,7 @@ $option = new Option();
     <link href="assets/public/vendor/animate.css/animate.min.css" rel="stylesheet">
     <link href="assets/public/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="assets/public/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="assets/vendor/sweetalert/sweetalert2.min.css" rel="stylesheet">
     <link href="assets/public/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
 
@@ -74,7 +75,6 @@ $option = new Option();
                 </li>
                 <li class="<?= $siteExtras->active_menu('portfolio') ?>"><a
                             href="index.php?page=portfolio">Portfolio</a></li>
-                <li class="<?= $siteExtras->active_menu('home') ?>"><a href="blog.html">Blog</a></li>
                 <li class="<?= $siteExtras->active_menu('contact') ?>"><a href="index.php?page=contact">Contact</a></li>
 
             </ul>
