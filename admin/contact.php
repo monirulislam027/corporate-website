@@ -1,20 +1,5 @@
 <?php require_once 'inc/header.php' ?>
 
-<?php
-
-use App\Classes\Option;
-
-$all_options = new Option();
-$contact_location = $all_options->contact_location();
-$contact_email = $all_options->contact_email();
-$contact_call = $all_options->contact_call();
-$twitter = $all_options->twitter();
-$linkedIn = $all_options->linkedIn();
-$facebook = $all_options->facebook();
-$instagram = $all_options->instagram();
-$skypee = $all_options->skypee();
-
-?>
 
 <div class="row justify-content-between">
 

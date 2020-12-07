@@ -2139,3 +2139,7 @@ section {
 #footer .credits a:hover {
   color: white;
 }
+/* custom css */
+.outline-none{
+  outline: none !important;
+}

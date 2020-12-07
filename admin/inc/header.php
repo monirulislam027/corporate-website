@@ -8,7 +8,11 @@ use App\Classes\Option;
 $auth = new Auth();
 $auth->isLogedIn() ? false : header('location:login.php');
 
-$options_header = new Option();
+$all_options = new Option();
+$site_name = $all_options->site_name();
+$contact_location = $all_options->contact_location();
+$contact_email = $all_options->contact_email();
+$contact_call = $all_options->contact_call();
 
 ?>
 
@@ -20,7 +24,7 @@ $options_header = new Option();
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title><?= $auth->titleGenerate() ?> | <?= $options_header->site_name()['value'] ?></title>
+    <title><?= $auth->titleGenerate() ?> | <?= $site_name['value'] ?></title>
 
     <link rel="icon" href="../../assets/favicon.ico" sizes="16x16">
 
@@ -39,7 +43,7 @@ $options_header = new Option();
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="<?= $options_header->base_url ?>"><?= $options_header->site_name()['value'] ?></a>
+        <a class="navbar-brand" href="/"><?= $site_name['value'] ?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

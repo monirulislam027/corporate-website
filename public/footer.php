@@ -1,4 +1,20 @@
+<?php
 
+use App\Classes\Option;
+
+$all_options = new Option();
+$site_name = $all_options->site_name();
+$contact_location = $all_options->contact_location();
+$contact_email = $all_options->contact_email();
+$contact_call = $all_options->contact_call();
+$twitter = $all_options->twitter();
+$linkedIn = $all_options->linkedIn();
+$facebook = $all_options->facebook();
+$instagram = $all_options->instagram();
+$skypee = $all_options->skypee();
+
+
+?>
 <!-- ======= Footer ======= -->
 <footer id="footer">
     <div class="footer-top">
@@ -7,19 +23,19 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-info">
-                        <h3>Sailor</h3>
+                        <h3><?= $site_name['value'] ?></h3>
                         <p>
-                            A108 Adam Street <br>
-                            NY 535022, USA<br><br>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
+                            <?= $contact_location['value'] ?>
+                            <br>
+                            <strong>Phone:</strong> <?= $contact_email['value'] ?><br>
+                            <strong>Email:</strong> <?= $contact_call['value'] ?><br>
                         </p>
                         <div class="social-links mt-3">
-                            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                            <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                            <?= $twitter['value'] != '' ? '<a href="' . $twitter['value'] . '"><i class="bx bxl-twitter"></i></a>' : '' ?>
+                            <?= $facebook['value'] != '' ? '<a href="' . $facebook['value'] . '"><i class="bx bxl-facebook"></i></a>' : '' ?>
+                            <?= $instagram['value'] != '' ? '<a href="' . $instagram['value'] . '"><i class="bx bxl-instagram"></i></a>' : '' ?>
+                            <?= $skypee['value'] != '' ? '<a href="' . $skypee['value'] . '"><i class="bx bxl-skype"></i></a>' : '' ?>
+                            <?= $linkedIn['value'] != '' ? '<a href="' . $linkedIn['value'] . '"><i class="bx bxl-linkedin"></i></a>' : '' ?>
                         </div>
                     </div>
                 </div>
@@ -50,7 +66,7 @@
                     <h4>Our Newsletter</h4>
                     <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
                     <form action="" method="post">
-                        <input type="email" name="email"><input type="submit" value="Subscribe">
+                        <input type="email" name="email" class="outline-none"><input type="submit" value="Subscribe">
                     </form>
 
                 </div>
@@ -76,17 +92,17 @@
 <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
 <!-- Vendor JS Files -->
-<script   src="assets/public/vendor/jquery/jquery.min.js"></script>
-<script   src="assets/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script   src="assets/public/vendor/jquery.easing/jquery.easing.min.js"></script>
-<script   src="assets/public/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script   src="assets/public/vendor/venobox/venobox.min.js"></script>
-<script   src="assets/public/vendor/waypoints/jquery.waypoints.min.js"></script>
-<script   src="assets/public/vendor/owl.carousel/owl.carousel.min.js"></script>
-<script   src="assets/vendor/sweetalert/sweetalert2.min.js"></script>
+<script src="assets/public/vendor/jquery/jquery.min.js"></script>
+<script src="assets/public/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/public/vendor/jquery.easing/jquery.easing.min.js"></script>
+<script src="assets/public/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/public/vendor/venobox/venobox.min.js"></script>
+<script src="assets/public/vendor/waypoints/jquery.waypoints.min.js"></script>
+<script src="assets/public/vendor/owl.carousel/owl.carousel.min.js"></script>
+<script src="assets/vendor/sweetalert/sweetalert2.min.js"></script>
 
 <!-- Template Main JS File -->
-<script   src="assets/public/js/main.js"></script>
+<script src="assets/public/js/main.js"></script>
 
 </body>
 
