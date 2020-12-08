@@ -45,7 +45,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'contact-message') {
                 $mail->Body = $message;
 
                 $mail->send();
-                $data['message'] = 'We have receive your message! We will contact your soon! ';
+                $data['message'] = 'We have receive your message! We will contact you soon! ';
             } catch (Exception $e) {
                 echo $auth->showMessage('danger', "Something went wrong! Try again!" . $mail->ErrorInfo);
             }
