@@ -36,7 +36,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'register') {
                             $message = 'ok';
                             $_SESSION['user_email'] = base64_encode($email);
                             $_SESSION['user_name'] = $name;
-                            $_SESSION['user_id'] = base64_encode($register['id']);
+
+                            $user = $auth->get_user($email);
+                            $user = $user->fetch_assoc();
+
+                            $_SESSION['user_id'] = base64_encode($user['id']);
                         } else {
                             $message = $auth->showMessage('danger', 'Something Went Wrong ! Try again!');
                         }

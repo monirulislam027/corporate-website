@@ -12,6 +12,8 @@ use App\Classes\Service;
 use App\Classes\Testimonials;
 use App\Classes\Skills;
 use App\Classes\Option;
+use App\Classes\Auth;
+
 
 $sliders = new Sliders();
 $works = new Works();
@@ -21,6 +23,7 @@ $service = new Service();
 $testimonial = new Testimonials();
 $skills = new Skills();
 $options = new Option();
+$auth = new Auth();
 
 
 $data = ['error' => false, 'r_url_con' => false];
@@ -1204,3 +1207,127 @@ if (isset($_POST['action']) && $_POST['action'] == 'contact-message-delete') {
 
 }
 
+
+if (isset($_POST['action']) && $_POST['action'] == 'profile-info') {
+
+   if (isset($_POST['name']) && isset($_POST['email'])){
+
+       $name = $_POST['name'];
+       $email = $_POST['email'];
+
+       $update = $auth->update_profile_info($name , $email);
+       if ($update) {
+           $data['message'] = 'Profile Info updated successfully!';
+
+       } else {
+           $data['error'] = 'true';
+           $data['message'] = 'Profile Info updated  failed!';
+       }
+   }else {
+
+       $data['error'] = true;
+
+       $name = $_POST['name'];
+       $email = $_POST['email'];
+
+       if ($name == '') {
+           $data['message'] = $team->error_message('name');
+       } elseif ($email == '') {
+           $data['message'] = $team->error_message('email');
+       }  else {
+           $data['message'] = 'Something Went Wrong!';
+       }
+   }
+   echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == 'password-change') {
+
+
+   if (isset($_POST['current_password']) && isset($_POST['new_password'])&& isset($_POST['confirm_password'])){
+
+       $current_password = $_POST['current_password'];
+       $new_password = $_POST['new_password'];
+       $confirm_password = $_POST['confirm_password'];
+
+       if ($new_password === $confirm_password){
+           $user = $auth->get_auth_user();
+           $password_hash = $user['password'];
+
+           if (password_verify($current_password , $password_hash)){
+
+               $new_password = password_hash($new_password , PASSWORD_DEFAULT);
+
+               $update_password = $auth->update_password($new_password);
+               if ($update_password) {
+                   $data['message'] = 'Password updated successfully!';
+               } else {
+                   $data['error'] = 'true';
+                   $data['message'] = 'Password updated  failed!';
+               }
+
+
+           }else{
+               $data['error'] = true;
+               $data['message'] = "You entered a wrong password!!";
+           }
+
+
+       }else{
+           $data['error'] = true;
+           $data['message'] = "Password didn't matched!";
+       }
+   }
+   else {
+
+       $data['error'] = true;
+
+       $current_password = $_POST['current_password'];
+       $new_password = $_POST['new_password'];
+       $confirm_password = $_POST['confirm_password'];
+
+       if ($current_password == '') {
+           $data['message'] = $auth->error_message('current password');
+       } elseif ($new_password == '') {
+           $data['message'] = $auth->error_message('new password');
+       } elseif ($confirm_password == '') {
+           $data['message'] = $auth->error_message('confirm password');
+       }  else {
+           $data['message'] = 'Something Went Wrong!';
+       }
+   }
+   echo json_encode($data);
+
+}
+
+
+if (isset($_POST['action']) && $_POST['action'] == base64_encode('update-profile-image')){
+
+//        images upload
+    $image = $_FILES['profile_image'];
+
+    $imageName = $image['name'];
+    /** @var  $imageExe */
+    $imageExe = explode('.', $imageName);
+    $imageExe = end($imageExe);
+
+    $imageNameToStore = uniqid() . rand(111111, 999999) . '.' . $imageExe;
+
+    $email = base64_decode( $_POST['user_email']);
+    $user = $auth->get_user($email);
+    $user = $user->fetch_assoc();
+
+    $update = $auth->user_photo_update($imageNameToStore , $user['id']);
+    if ($update){
+
+        if ($user['photo']){
+            unlink('../../uploads/users/' . $user['photo']);
+        }
+        move_uploaded_file($image['tmp_name'], '../../uploads/users/' . $imageNameToStore);
+    }
+
+    header('location:location:javascript://history.go(-1)');
+
+}

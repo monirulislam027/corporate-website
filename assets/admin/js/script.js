@@ -150,7 +150,7 @@ $(document).ready(function () {
             data: {id: id, status: status, action: action},
             success: function (response) {
                 $('.loader').hide();
-            } ,
+            },
             error: function (response) {
                 console.log('error')
             }
@@ -339,11 +339,21 @@ $(document).ready(function () {
         $.ajax({
             url: 'http://dcw.test/admin/inc/action.php',
             method: 'post',
-            data: {id: id, value: value , action: action}
+            data: {id: id, value: value, action: action}
         });
 
     });
 
+
+//    profile image upload
+    // option input data save
+    $('body').on('change', '#profile_image', function () {
+
+        imagePreview(this, '.profile-image');
+        setTimeout(function () {
+            $('#profile-image-form').submit();
+        }, 700)
+    });
 
 
 //    jquery end
