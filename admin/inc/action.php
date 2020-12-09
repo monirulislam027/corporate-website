@@ -1392,9 +1392,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'client-logo-delete') {
 
     $id = (int)$_POST['id'];
 
+    $logo = $client->client_logo_find($id);
+
     $delete = $client->logo_delete($id);
 
     if ($delete) {
+
+        unlink('../../uploads/clients/' . $logo['image']);
         $data['message'] = 'Client Logo deleted successfully!';
 
     } else {

@@ -24,7 +24,13 @@ class Client extends Config
 
     public function logo_delete($id)
     {
-        return $this->conn->query("Delete From `client_logo` WHERE `id` = '$id'");
+        return $this->conn->query("DELETE FROM `client_logo` WHERE `id` = '$id'");
+    }
+
+    public function client_logo_find($id){
+        $logo = $this->conn->query("Select * From `client_logo` WHERE  `id` = '$id'");
+        return $logo->fetch_assoc();
+
     }
 
 }
