@@ -9,12 +9,17 @@ class Config
 {
     public $conn;
 
+    protected $host = 'localhost'; // database host
+    protected $username = 'root'; // database user name
+    protected $password = ''; // database password
+    protected $database = 'dcw'; // database name
+
     public $base_url = 'http://dcw.test/';
 
     public function __construct()
     {
 //        session_start();
-        $this->conn = new mysqli('localhost', 'root', '', 'dcw');
+        $this->conn = new mysqli($this->host, $this->username, $this->password, $this->database);
         if ($this->conn->connect_error) {
             die($this->conn->connect_error);
         }
