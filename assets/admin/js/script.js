@@ -252,17 +252,14 @@ $(document).ready(function () {
                             )
                         }
                     } else {
-                        Swal.fire(
-                            'Failed!',
-                            response.message,
-                            'warning'
-                        )
+
+                        toastr.error(response.message, {timeOut: 3000});
                     }
 
                 },
                 error: function (response) {
                     $('.loader').hide();
-                    console.log(response);
+                    console.log('error');
                 }
             });
 

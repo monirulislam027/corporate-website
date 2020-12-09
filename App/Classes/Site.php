@@ -53,4 +53,8 @@ class Site extends Config
 
     }
 
+    public function client_logos(){
+        return $this->conn->query("SELECT * FROM `client_logo` WHERE `status` = 1 ORDER BY `id` DESC ");
+    }
+
 }

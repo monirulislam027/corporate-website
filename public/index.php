@@ -4,6 +4,7 @@ require_once './public/header.php';
 
 $sliders = $site->sliders();
 $services = $site->home_page_services();
+$client_logos = $site->client_logos();
 
 
 ?>
@@ -58,40 +59,28 @@ $services = $site->home_page_services();
 
         <?php require_once './public/component/about_us.php' ?>
 
-        <!-- ======= Clients Section ======= -->
-        <section id="clients" class="clients section-bg">
-            <div class="container">
+        <?php if ($client_logos->num_rows > 0) { ?>
 
-                <div class="row">
 
-                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                        <img src="assets/public/img/clients/client-1.png" class="img-fluid" alt="">
-                    </div>
+            <!-- ======= Clients Section ======= -->
+            <section id="clients" class="clients section-bg">
+                <div class="container">
 
-                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                        <img src="assets/public/img/clients/client-2.png" class="img-fluid" alt="">
-                    </div>
+                    <div class="row">
 
-                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                        <img src="assets/public/img/clients/client-3.png" class="img-fluid" alt="">
-                    </div>
+                        <?php while ($logo = $client_logos->fetch_assoc()) { ?>
 
-                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                        <img src="assets/public/img/clients/client-4.png" class="img-fluid" alt="">
-                    </div>
+                            <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
+                                <img src="uploads/clients/<?= $logo['image'] ?>" class="img-fluid" alt="Client">
+                            </div>
 
-                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                        <img src="assets/public/img/clients/client-5.png" class="img-fluid" alt="">
-                    </div>
+                        <?php } ?>
 
-                    <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
-                        <img src="assets/public/img/clients/client-6.png" class="img-fluid" alt="">
                     </div>
 
                 </div>
-
-            </div>
-        </section><!-- End Clients Section -->
+            </section><!-- End Clients Section -->
+        <?php } ?>
 
         <!-- ======= Services Section ======= -->
         <section id="services" class="services">
@@ -122,7 +111,6 @@ $services = $site->home_page_services();
         </section><!-- End Services Section -->
 
 
-
         <!-- ======= Portfolio Section ======= -->
         <section id="portfolio" class="portfolio">
             <div class="container">
@@ -133,7 +121,7 @@ $services = $site->home_page_services();
                 </div>
 
 
-                <?php require_once './public/component/portfolio.php'?>
+                <?php require_once './public/component/portfolio.php' ?>
 
             </div>
         </section><!-- End Portfolio Section -->

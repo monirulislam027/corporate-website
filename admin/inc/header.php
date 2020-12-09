@@ -64,14 +64,21 @@ $contact_call = $all_options->contact_call();
                 </li>
 
                 <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'service.php') || (basename($_SERVER['PHP_SELF']) === 'service_add.php') || (basename($_SERVER['PHP_SELF']) === 'service_edit.php') ? 'active' : '' ?>">
-                    <a class="nav-link" href="service.php"><i class="fas fa-assistive-listening-systems"></i> Services
-                    </a>
+                    <a class="nav-link" href="service.php"><i class="fas fa-assistive-listening-systems"></i> Services</a>
                 </li>
 
-                <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'testimonials.php') || (basename($_SERVER['PHP_SELF']) === 'testimonials_add.php') || (basename($_SERVER['PHP_SELF']) === 'testimonials_edit.php') ? 'active' : '' ?>">
-                    <a class="nav-link" href="testimonials.php"><i class="fas fa-assistive-listening-systems"></i>
-                        Testimonials </a>
+
+                <li class="nav-item dropdown <?= (basename($_SERVER['PHP_SELF']) === 'testimonials.php') || (basename($_SERVER['PHP_SELF']) === 'testimonials_add.php') || (basename($_SERVER['PHP_SELF']) === 'testimonials_edit.php')|| (basename($_SERVER['PHP_SELF']) === 'client_logo.php')|| (basename($_SERVER['PHP_SELF']) === 'add_client_logo.php') ? 'active' : '' ?>">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-clipboard-check"></i> Client
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="testimonials.php">Testimonials</a>
+                        <a class="dropdown-item" href="client_logo.php">Client Logo</a>
+                    </div>
                 </li>
+
 
                 <li class="nav-item <?= (basename($_SERVER['PHP_SELF']) === 'skills.php') || (basename($_SERVER['PHP_SELF']) === 'skill_add.php') || (basename($_SERVER['PHP_SELF']) === 'skill_edit.php') ? 'active' : '' ?>">
                     <a class="nav-link" href="skills.php"><i class="fas fa-ribbon"></i> Skills </a>
