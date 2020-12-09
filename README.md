@@ -58,9 +58,11 @@ Title: Web Developer
 
 Email: mmislam027@gmail.com
     
-[Facebook]('https://www.facebook.com/mdmoni027/' "Facebook Profile")
-[Instagram]('https://www.instagram.com/mdmonir027' "Instagram Profile")
-[LinkedIn]('https://www.linkedin.com/in/mdmonir027' "LinkedIn Profile")
-[Github]('https://github.com/mdmonir027' "Github Profile")
+    
+[Facebook]('https://www.facebook.com/mdmoni027/')
+[Instagram]('https://www.instagram.com/mdmonir027' )
+[LinkedIn]('https://www.linkedin.com/in/mdmonir027')
+[Github]('https://github.com/mdmonir027')
+
 
 
