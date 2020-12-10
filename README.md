@@ -52,17 +52,16 @@ Backend Design
 
 Devlopers
 --
-Name: [Md Monir]('https://mdmonir-portfolio.web.app/')
+Name: [Md Monir][website]
 
 Title: Web Developer
 
 Email: mmislam027@gmail.com
-    
-    
-[Facebook]('https://www.facebook.com/mdmoni027/')
-[Instagram]('https://www.instagram.com/mdmonir027' )
-[LinkedIn]('https://www.linkedin.com/in/mdmonir027')
-[Github]('https://github.com/mdmonir027')
+   
+[Facebook][facebook] [Instagram][instagram] [GitHub][github] [LinkedIn][linkedin]
 
-
-
+[website]: https://mdmonir-portfolio.web.app/
+[instagram]: https://www.instagram.com/mdmonir027
+[github]: https://github.com/mdmonir027
+[linkedin]: https://www.linkedin.com/in/mdmonir027
+[Facebook]: https://www.facebook.com/mdmoni027/
