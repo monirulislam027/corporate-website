@@ -354,10 +354,7 @@ $(document).ready(function () {
 
 
 //    jquery end
-})
-;
-
-// image preview
+});
 
 function imagePreview(file, targetBlock) {
 

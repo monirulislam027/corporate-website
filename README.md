@@ -57,6 +57,7 @@ Name: [Md Monir][website]
 Title: Web Developer
 
 Email: mmislam027@gmail.com
+<<<<<<< Updated upstream
    
 [Facebook][facebook] [Instagram][instagram] [GitHub][github] [LinkedIn][linkedin]
 
@@ -65,3 +66,12 @@ Email: mmislam027@gmail.com
 [github]: https://github.com/mdmonir027
 [linkedin]: https://www.linkedin.com/in/mdmonir027
 [Facebook]: https://www.facebook.com/mdmoni027/
+=======
+    
+[Facebook]('https://www.facebook.com/mdmoni027/')
+[Instagram]('https://www.instagram.com/mdmonir027' )
+[LinkedIn]('https://www.linkedin.com/in/mdmonir027')
+[Github]('https://github.com/mdmonir027')
+
+
+>>>>>>> Stashed changes

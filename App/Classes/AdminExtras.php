@@ -32,6 +32,8 @@ class AdminExtras extends Config
         return $this->conn->query("Delete From `contact` WHERE `id` = '$id'");
     }
 
+
+
 }
 
 
