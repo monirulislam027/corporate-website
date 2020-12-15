@@ -139,7 +139,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reset-password') {
                     $mail->Port = 2525;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
                     //Recipients
-                    $mail->setFrom('mdmonir027@gmail.com', 'Md Monir');
+                    $mail->setFrom('mdmonir027@gmail.com', 'Md Monir'); // your email address and name this will show to the mail header
                     $mail->addAddress($email);
 
                     // Content

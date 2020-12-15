@@ -5,7 +5,7 @@
 
 Navigate `uploads` folder and create these folders
 ~~~ 
-clints
+clients
 sliders
 team
 testimonials
@@ -26,6 +26,31 @@ Open This file `database.sql` and copy everything from there and go to your data
 
 `or`
 Import `database.sql` file
+
+##### Navigate `admin/action.php` and go to line no `133`  
+> Configure this option with your webmail credentials.
+~~~
+    $mail->Host = 'smtp.mailtrap.io';  // Set the SMTP server to send through
+    $mail->SMTPAuth = true;  // Enable SMTP authentication
+    $mail->Username = '**********';  // SMTP username
+    $mail->Password = '**********';  // SMTP password
+    $mail->Port = 2525;  // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+    //Recipients
+    $mail->setFrom('yourmail@gmail.com', 'Your name'); // your email address and name this will show to the mail header               
+~~~ 
+
+
+
+> # Admin Panel
+To access admin panel dashboard Go to `yoursite.com/admin`
+
+Admin panel access credentials
+~~~ 
+Username: admin@e.com
+Password: admin123
+~~~
+
 
 ___
 
@@ -50,14 +75,13 @@ Backend Design
     Toaster: https://codeseven.github.io/toastr/
 ~~~
 
-Devlopers
+Developed By
 --
 Name: [Md Monir][website]
 
 Title: Web Developer
 
 Email: mmislam027@gmail.com
-<<<<<<< Updated upstream
    
 [Facebook][facebook] [Instagram][instagram] [GitHub][github] [LinkedIn][linkedin]
 
@@ -66,12 +90,3 @@ Email: mmislam027@gmail.com
 [github]: https://github.com/mdmonir027
 [linkedin]: https://www.linkedin.com/in/mdmonir027
 [Facebook]: https://www.facebook.com/mdmoni027/
-=======
-    
-[Facebook]('https://www.facebook.com/mdmoni027/')
-[Instagram]('https://www.instagram.com/mdmonir027' )
-[LinkedIn]('https://www.linkedin.com/in/mdmonir027')
-[Github]('https://github.com/mdmonir027')
-
-
->>>>>>> Stashed changes
